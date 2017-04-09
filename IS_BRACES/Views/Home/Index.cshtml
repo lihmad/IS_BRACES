@@ -1,67 +1,113 @@
-﻿<style>
-    .jumbotron {
-        background: url(../../Content/Images/vacation.jpg) 50% 50%/cover;
-        height: 600px;
-        padding-top: 0px;
-    }
+﻿
+@section css{
+
+    @Styles.Render("~/Content/datepicker")
+    <style>
+        .jumbotron {
+            background: url(../../Content/Images/vacation.jpg) 50% 50%/cover;
+            height: 600px;
+            padding-top: 0px;
+        }
 
 
-    /*https://icons8.com/web-app/40914/alps*/
-    .icon_mountain {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAD4UlEQVRoQ+2YjZENURCFz0aACBABIkAEiAARIAJEgAjYCBABIkAEiAARUN+re1Sb7XvvvJl5s2+3Xldt7Zv7N3369N+dI50TOTonOLQUkFuSXkv6JemhpC9rG2gJIBclfZPEfwQwV8v/1fAsAeSZpKeSPhWtb0p6Lonx1WQukMjG7aL1h9NgZS6QByU2YIM4QT5KWp2VuUCIjSslwN8UIAAyKzeK212X9EqS1yzucnOAmI0fBUxU7p2kO5K+D+ZIAoyx90VhjyxHgpglc4BkbFgZWGLe8lXSNUnHhRUYs+CKjq/JYKYCabFhZXCj+yWbsd7AqDF2NcYvlHQNU5NlKhAsSizgFjW/Nyv3JOFqBoaydseXkh4VpgA1WcYCsU9jNWrEW0m/QxGsKUAtcT2J7mYDxDHHzyQwY4E4HuJLphQ9s0KsmIFsbGswY4DYajCA4NP8ZnzbbJMxsAgrY4A4sLEiGYbmcAobwySQsTL53DFAXBPs1zwDbls2stTsuCCLfZ7T2owB8rMEtV9KfzUVxJCVyMCs1qYHxJbKqvfWARk2OC5iyx9bGwDSUQNuVOXvAXlcWonoz3MAxL0ZAx7bOjv2gAzjYykQnBMZ8EXsbqlRzLutoXYx35QekGF89M7bdj5jBcUvF+WZ53erg9i8swXEFsMyxMouJGOFjMg4/536u41lC4ivsNwjiJVdScYKycBNJAmBIkyHzNpUWkD8Ajd9uwKSsRLfZYM2E04LyJ9y2qUF6kbPCK0aMqqFqQFZIj4onNxHyETEGM/cRWgSsW4sqpEVDDcUN5bVFqYGJMYHKZg7Awrxcp6fNFhCYdYTV/7WNVQM/8dl44c8s5JlqG4LUwNC38Nm3+aGijBO8EWrZgD4uoI1AY9gDC5TBC97OcNgXENqdaMFNE2/KET9iIIrwBJzKMb9GwXcPuBCkQEAsD7LMpwBMD4ZDcG4hmSsOBWnQDNGYnXl3sFzVAhFeAbMUFoAan4PGNyMM6OysMWXGN5PwPNnOZGKh0BQkvs4bkUh5JDsowDrcBHmEZTguZrnK2kr3uNhlJplVlqZDvAwzvqNRCBDEGSSue16SxnPRTAYAlbpfBFcGjdkHF0wMABgCmEvbvgfEAc4TKwFwmBwKSeBCL7WY9kF/2GIjKxZADOmiAHA2Nqswc1wuffJBuu7wZAB6XXEY9xlzhq8Afchq1kAZBfDY3jeeyBWHoZgw18jo3GIFxfbvWUkY5MgJ0PCFr8pqJYzBSQDd2ZcqxdnByA9C609f2BkbYv33tdlpHfAvs1X0+++KdrT5wSQ3oa9nj/tvmox4xyALGbKhQ76Cw01HkLYLiRVAAAAAElFTkSuQmCC) no-repeat center;
-    }
-    /*https://icons8.com/web-app/7186/spa*/
-    .icon_spa {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACsElEQVRoQ+1a/zEEUQz+rgJUgApQASpABagAFXAVoAJUgApQASpwKuAqYL6d5Obt7bmXZG7t7sy+v85I8vK95GXz4w3gW1cADgFsARgZWL30FBnhwcCgTEpyK0CGAC4MvF56iozwuIHsA7gH8AJgxwDES0+RER43kGUAX+JW6wYgXnqKjPCEgbwD2HQAsdKnQDw8biBq9kdxgRwWL33qWtY9Ch28l/0BwB6AM4kuOSBeesqL8LiArAH4EM1XAHxnUHjpKS7C47YI4/sJgDsARzlTiMU89PoN8fK4gbzKBd8F8GwA4qWnyAiPG8iPKG+9V156io/whIFY7keqlJU+yuMGotHEmp546dOIZd1j4uFWNyEDU5IniVa8J2+Ze5LSW5NM7x4hIOmJEQSVyy21ipU+sofbtcjAPIgRi/Gev3PLSx/ZIwQkp3hj//fckcaUtGzcA7Gc0n/SqEUuJS3nJe7SYt+ApfGQQDQZ7BKAaV0LICxdGSb5Xch95NoGllUqE80RgbCuWAJwIEVN25Sdp48CGRMI2zrnXdJ+hq6Fa3F1GUyRYKbfkXAt0JA1S/r2QBqyQrptb5EWGKGkQm+R3iI1nUDvWjUdbFhsb5Hw0dXE+KdFWItsdKQu0fR9MtVKcy2tFK8BnNZ0iosSW9E1BZIOWdpcLao1eCgcyBbz/ul2kCJl1ciK0TIHWdQpW+RwJnkjpXnJc2b1tXRgT8EEwr85V7e8dLAo46Whp2zLlExn+5Wp2V8NOt4RVo2s5du0xqIXPae05nUa2VlRU7YBzLE0R2YOYS0t06ZLYNP+OSD6nOJTRglNWEbbVXNHeDnXYiuVo2jXK4QFo9VhEYMOHyqYXUtHxKoPLxhjd5NRi1lHGngqE7BZFtFUhe7E34xgTYHQw2QIZqTiga4CqDy4+QU/b7gCSUp2zwAAAABJRU5ErkJggg==) no-repeat center;
-    }
+        /*https://icons8.com/web-app/40914/alps*/
+        .icon_mountain {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAD4UlEQVRoQ+2YjZENURCFz0aACBABIkAEiAARIAJEgAjYCBABIkAEiAARUN+re1Sb7XvvvJl5s2+3Xldt7Zv7N3369N+dI50TOTonOLQUkFuSXkv6JemhpC9rG2gJIBclfZPEfwQwV8v/1fAsAeSZpKeSPhWtb0p6Lonx1WQukMjG7aL1h9NgZS6QByU2YIM4QT5KWp2VuUCIjSslwN8UIAAyKzeK212X9EqS1yzucnOAmI0fBUxU7p2kO5K+D+ZIAoyx90VhjyxHgpglc4BkbFgZWGLe8lXSNUnHhRUYs+CKjq/JYKYCabFhZXCj+yWbsd7AqDF2NcYvlHQNU5NlKhAsSizgFjW/Nyv3JOFqBoaydseXkh4VpgA1WcYCsU9jNWrEW0m/QxGsKUAtcT2J7mYDxDHHzyQwY4E4HuJLphQ9s0KsmIFsbGswY4DYajCA4NP8ZnzbbJMxsAgrY4A4sLEiGYbmcAobwySQsTL53DFAXBPs1zwDbls2stTsuCCLfZ7T2owB8rMEtV9KfzUVxJCVyMCs1qYHxJbKqvfWARk2OC5iyx9bGwDSUQNuVOXvAXlcWonoz3MAxL0ZAx7bOjv2gAzjYykQnBMZ8EXsbqlRzLutoXYx35QekGF89M7bdj5jBcUvF+WZ53erg9i8swXEFsMyxMouJGOFjMg4/536u41lC4ivsNwjiJVdScYKycBNJAmBIkyHzNpUWkD8Ajd9uwKSsRLfZYM2E04LyJ9y2qUF6kbPCK0aMqqFqQFZIj4onNxHyETEGM/cRWgSsW4sqpEVDDcUN5bVFqYGJMYHKZg7Awrxcp6fNFhCYdYTV/7WNVQM/8dl44c8s5JlqG4LUwNC38Nm3+aGijBO8EWrZgD4uoI1AY9gDC5TBC97OcNgXENqdaMFNE2/KET9iIIrwBJzKMb9GwXcPuBCkQEAsD7LMpwBMD4ZDcG4hmSsOBWnQDNGYnXl3sFzVAhFeAbMUFoAan4PGNyMM6OysMWXGN5PwPNnOZGKh0BQkvs4bkUh5JDsowDrcBHmEZTguZrnK2kr3uNhlJplVlqZDvAwzvqNRCBDEGSSue16SxnPRTAYAlbpfBFcGjdkHF0wMABgCmEvbvgfEAc4TKwFwmBwKSeBCL7WY9kF/2GIjKxZADOmiAHA2Nqswc1wuffJBuu7wZAB6XXEY9xlzhq8Afchq1kAZBfDY3jeeyBWHoZgw18jo3GIFxfbvWUkY5MgJ0PCFr8pqJYzBSQDd2ZcqxdnByA9C609f2BkbYv33tdlpHfAvs1X0+++KdrT5wSQ3oa9nj/tvmox4xyALGbKhQ76Cw01HkLYLiRVAAAAAElFTkSuQmCC) no-repeat center;
+        }
+        /*https://icons8.com/web-app/7186/spa*/
+        .icon_spa {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACsElEQVRoQ+1a/zEEUQz+rgJUgApQASpABagAFXAVoAJUgApQASpwKuAqYL6d5Obt7bmXZG7t7sy+v85I8vK95GXz4w3gW1cADgFsARgZWL30FBnhwcCgTEpyK0CGAC4MvF56iozwuIHsA7gH8AJgxwDES0+RER43kGUAX+JW6wYgXnqKjPCEgbwD2HQAsdKnQDw8biBq9kdxgRwWL33qWtY9Ch28l/0BwB6AM4kuOSBeesqL8LiArAH4EM1XAHxnUHjpKS7C47YI4/sJgDsARzlTiMU89PoN8fK4gbzKBd8F8GwA4qWnyAiPG8iPKG+9V156io/whIFY7keqlJU+yuMGotHEmp546dOIZd1j4uFWNyEDU5IniVa8J2+Ze5LSW5NM7x4hIOmJEQSVyy21ipU+sofbtcjAPIgRi/Gev3PLSx/ZIwQkp3hj//fckcaUtGzcA7Gc0n/SqEUuJS3nJe7SYt+ApfGQQDQZ7BKAaV0LICxdGSb5Xch95NoGllUqE80RgbCuWAJwIEVN25Sdp48CGRMI2zrnXdJ+hq6Fa3F1GUyRYKbfkXAt0JA1S/r2QBqyQrptb5EWGKGkQm+R3iI1nUDvWjUdbFhsb5Hw0dXE+KdFWItsdKQu0fR9MtVKcy2tFK8BnNZ0iosSW9E1BZIOWdpcLao1eCgcyBbz/ul2kCJl1ciK0TIHWdQpW+RwJnkjpXnJc2b1tXRgT8EEwr85V7e8dLAo46Whp2zLlExn+5Wp2V8NOt4RVo2s5du0xqIXPae05nUa2VlRU7YBzLE0R2YOYS0t06ZLYNP+OSD6nOJTRglNWEbbVXNHeDnXYiuVo2jXK4QFo9VhEYMOHyqYXUtHxKoPLxhjd5NRi1lHGngqE7BZFtFUhe7E34xgTYHQw2QIZqTiga4CqDy4+QU/b7gCSUp2zwAAAABJRU5ErkJggg==) no-repeat center;
+        }
 
-    /*https://icons8.com/web-app/3504/suitcase*/
-    .icon_suitcase {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACoElEQVRoQ+2Zjy0EQRTGv6sAFaADKkAFqAAVoAKnAx2gAlSACujAXQWogPwu85LJZP/MuN2dvbUvkcjdJPt+8733vZnbiQYSk4FwaATpm5KjIgWK7Eh6kLQVqdZM0rGk98j1lcuaVOQjAcKSAma7byA/LqHYzUld35kiqYmlrh9BUks3dYdT1/8vRa4knf7BdVJVa3o9rncn6RqHmUoCZJVjAWL+v9vUcOpwRxjCb5JmgDTadB1C2KMW+Y8gGXa+7JGdKMIBEiM5krQu6UvSIy5DXTe0Ga2D7LvTMABhAMTJ96UBmFZBUAI3AeLJWTzHdVwGuz906uCUyyrTKghD6sRBUFZhUF7A3LtBvIwwrYJ8OjXKZhNl9+xU2ViGwsZHW/YbM5ti1sQwtqoIzbwmqU6Rb6dcTMJZ7Nd6hF7AncLgbk/v9L5HcC1cClWAuZH0KmlP0oWDQA1crNeuhQI0NBDAhAEEitTNEUDP3fWCtQzSMFrtEXsYyjA3SBogAIDjszIlmD1YN/cjQPw4KIDvBCSliZkrAANgATj9RqAMwzWcS70AQTESJDn/hz0SRjmD4DvuTQRzB1e0yAZC6bD77Dx9ZDF3iZN8UdnZaeDSmUdWECCY6Fb71jMkX9f4gN86N2Q+ZQWxowkA2DC77JdJXU8VDdospVVV61UQZsN2r/HdKwsIyVJCDMYzr5mLIMpsODwNZAMpq3WDMSPwbdZsmF4KX0NkA2GncSUGJK8U+J/SsSHo3yixYZKnl8oiGwgJ2aGSMiNxf4Jjw5zNSD7mHJYVxG96wMyGAUh9g5UVhOSxYv7Y9VQb9sssO0jdzIj9fgSJ3amu1o2KdLXTsc8ZniLY32bFTzexO5Njnb3omQ/q1Rs7yY8BHOZQZpXCbpXTX7LpydLiX2yIAAAAAElFTkSuQmCC) no-repeat center;
-    }
+        /*https://icons8.com/web-app/3504/suitcase*/
+        .icon_suitcase {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACoElEQVRoQ+2Zjy0EQRTGv6sAFaADKkAFqAAVoAKnAx2gAlSACujAXQWogPwu85LJZP/MuN2dvbUvkcjdJPt+8733vZnbiQYSk4FwaATpm5KjIgWK7Eh6kLQVqdZM0rGk98j1lcuaVOQjAcKSAma7byA/LqHYzUld35kiqYmlrh9BUks3dYdT1/8vRa4knf7BdVJVa3o9rncn6RqHmUoCZJVjAWL+v9vUcOpwRxjCb5JmgDTadB1C2KMW+Y8gGXa+7JGdKMIBEiM5krQu6UvSIy5DXTe0Ga2D7LvTMABhAMTJ96UBmFZBUAI3AeLJWTzHdVwGuz906uCUyyrTKghD6sRBUFZhUF7A3LtBvIwwrYJ8OjXKZhNl9+xU2ViGwsZHW/YbM5ti1sQwtqoIzbwmqU6Rb6dcTMJZ7Nd6hF7AncLgbk/v9L5HcC1cClWAuZH0KmlP0oWDQA1crNeuhQI0NBDAhAEEitTNEUDP3fWCtQzSMFrtEXsYyjA3SBogAIDjszIlmD1YN/cjQPw4KIDvBCSliZkrAANgATj9RqAMwzWcS70AQTESJDn/hz0SRjmD4DvuTQRzB1e0yAZC6bD77Dx9ZDF3iZN8UdnZaeDSmUdWECCY6Fb71jMkX9f4gN86N2Q+ZQWxowkA2DC77JdJXU8VDdospVVV61UQZsN2r/HdKwsIyVJCDMYzr5mLIMpsODwNZAMpq3WDMSPwbdZsmF4KX0NkA2GncSUGJK8U+J/SsSHo3yixYZKnl8oiGwgJ2aGSMiNxf4Jjw5zNSD7mHJYVxG96wMyGAUh9g5UVhOSxYv7Y9VQb9sssO0jdzIj9fgSJ3amu1o2KdLXTsc8ZniLY32bFTzexO5Njnb3omQ/q1Rs7yY8BHOZQZpXCbpXTX7LpydLiX2yIAAAAAElFTkSuQmCC) no-repeat center;
+        }
 
 
-    /*https://icons8.com/web-app/3493/beach*/
-    .icon_beach {
-        background: url(data:image/png;base64,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) no-repeat center;
-    }
+        /*https://icons8.com/web-app/3493/beach*/
+        .icon_beach {
+            background: url(data:image/png;base64,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) no-repeat center;
+        }
 
-    /*https://icons8.com/web-app/30848/munich-cathedral*/
-    .icon_cathedral {
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACc0lEQVRoQ+1ZjTUEMRD+rgJ0QAdUgApQASpABeiACtABFaACOqADVMD7vGTf3N5uMsnkcmftvLfv7m0ySb6ZzO9OMBCaDAQHQkAuAJwDuATA/ylk4U3Zp5kbAvItVkzVnIW3GJAdACcA+LsK4BPAE4Br9xvayMKbBcAztSV9A+AosOItgOOecQuvCQSZJRB5ENoFtcCHUuZDeyFRM6etnS28ZhASCA/66FbcAvDasfomgBf3fldcMwtvERASyD2APYWH8t7oAcC+O4WFtziQD2fYfdrwG3rp0wGsuZcW3uJAvLvUuNn2XAtvcSCU8AqADQDvgdXXAbwB+HIa5FQLb3EgdKuHzoBpB88dO2y7CM/rdSfctIW3OBAvae3CUnMWXu1+0XnSJmRaEWNs25KFN7aXarwLiCb/6gOSw6s6aGxSCEhXBtvnodrvU3hjZ1SNh4B0ZbBaICm8qoPGJo1AWhLqC5IyDUoJnDEFzIwP2mtppDG631YNpBGaas4YRyLG7uPIGYArN7e6sXsthWIBK0hWjDWJe7Je6qTcyF4TgNyrt8eWayNcXNbt8wYmK1NqZaZmygUi65F5g/Dry7qHQpyinIDI6pA1CCvDmsRmITXBSvYAAJseDeUAYYOO0lkEsXnIHhqFyOKuEab2atGFso3KEpj3dZHEpiHL7qlGoQaIbMDFmhM1AMrSunE4GiDsLtaOGVqBNLFFAySlHtceoOS8XwwpQDTNu5IHjK01lfL8eyChT2u1xopoJPRprdbYCKQvCwiVvfMcGzUyakQEhJKOYLxaf+5qxVKDZRufybV8nr9sBw2dp/lMvmyJYLYQBwPkByZUBkL88xr1AAAAAElFTkSuQmCC) no-repeat center;
-    }
+        /*https://icons8.com/web-app/30848/munich-cathedral*/
+        .icon_cathedral {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACc0lEQVRoQ+1ZjTUEMRD+rgJ0QAdUgApQASpABeiACtABFaACOqADVMD7vGTf3N5uMsnkcmftvLfv7m0ySb6ZzO9OMBCaDAQHQkAuAJwDuATA/ylk4U3Zp5kbAvItVkzVnIW3GJAdACcA+LsK4BPAE4Br9xvayMKbBcAztSV9A+AosOItgOOecQuvCQSZJRB5ENoFtcCHUuZDeyFRM6etnS28ZhASCA/66FbcAvDasfomgBf3fldcMwtvERASyD2APYWH8t7oAcC+O4WFtziQD2fYfdrwG3rp0wGsuZcW3uJAvLvUuNn2XAtvcSCU8AqADQDvgdXXAbwB+HIa5FQLb3EgdKuHzoBpB88dO2y7CM/rdSfctIW3OBAvae3CUnMWXu1+0XnSJmRaEWNs25KFN7aXarwLiCb/6gOSw6s6aGxSCEhXBtvnodrvU3hjZ1SNh4B0ZbBaICm8qoPGJo1AWhLqC5IyDUoJnDEFzIwP2mtppDG631YNpBGaas4YRyLG7uPIGYArN7e6sXsthWIBK0hWjDWJe7Je6qTcyF4TgNyrt8eWayNcXNbt8wYmK1NqZaZmygUi65F5g/Dry7qHQpyinIDI6pA1CCvDmsRmITXBSvYAAJseDeUAYYOO0lkEsXnIHhqFyOKuEab2atGFso3KEpj3dZHEpiHL7qlGoQaIbMDFmhM1AMrSunE4GiDsLtaOGVqBNLFFAySlHtceoOS8XwwpQDTNu5IHjK01lfL8eyChT2u1xopoJPRprdbYCKQvCwiVvfMcGzUyakQEhJKOYLxaf+5qxVKDZRufybV8nr9sBw2dp/lMvmyJYLYQBwPkByZUBkL88xr1AAAAAElFTkSuQmCC) no-repeat center;
+        }
 
-    .icon {
-        border-radius: 30px;
-        height: 100px;
-        width: 100px;
-        background-color: rgba(255, 255, 255, 0.2);
-        transition: all 500ms linear;
-    }
+        .icon {
+            border-radius: 30px;
+            height: 100px;
+            width: 100px;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 500ms linear;
+        }
 
-    .icon:hover {
-        background-color: rgba(255, 255, 41, 1);
-    }
+            .icon:hover {
+                background-color: rgba(255, 255, 41, 1);
+            }
 
-    .icon_text {
-        text-align: center;
-        margin-top:5px;
-    }
-</style>
+        .icon_text {
+            text-align: center;
+            margin-top: 5px;
+        }
+    </style>
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/datepicker")
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                locale: 'cs',
+                format: 'L'
+            });
+            $('#datetimepicker2').datetimepicker({
+                useCurrent: false //Important! See issue #1075
+            });
+            $("#datetimepicker1").on("dp.change", function (e) {
+                $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+            });
+            $("#datetimepicker2").on("dp.change", function (e) {
+                $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+            });
+        });
+    </script>
+}
+
 <div class="jumbotron">
     <div class="container">
         <h1>BlueTravel s.r.o.</h1>
-        <p class="lead">ASP.NET @ViewBag.G is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
         <div class="row">
 
-            @using (Html.BeginForm("FindQuick", "Holiday", FormMethod.Post, new { @class = "form-control" })){ 
-                <input type="text" />
-                <input type="date" />
-                <input type="date" />
-                <button type="submit" class="btn btn-default">Submit</button>
+            @using (Html.BeginForm("FindQuick", "Holiday", FormMethod.Post, new { @class = "form-group form-group-lg" }))
+            {
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                    <input type="text" class="form-control " />
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" >
+                    <div class="input-group date" id="datetimepicker1">
+                        <input type="text" class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                    <div class="input-group date" id="datetimepicker2">
+                        <input type="text" class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
             }
         </div>
+        <br />
         <div class="row">
             <div class="col-md-2">
                 <div class="icon icon_mountain center-block"></div>

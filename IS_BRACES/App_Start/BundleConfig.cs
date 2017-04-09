@@ -23,6 +23,15 @@ namespace IS_BRACES
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                    "~/Scripts/moment-with-locales.min.js"
+                ));
+            bundles.Add(new ScriptBundle("~/bundles/datepicker").Include(
+                    "~/Scripts/bootstrap-datetimepicker.min.js"
+                ));
+            bundles.Add(new StyleBundle("~/Content/datepicker").Include(
+                    "~/Content/bootstrap-datetimepicker.css"
+                ));
         }
     }
 }
