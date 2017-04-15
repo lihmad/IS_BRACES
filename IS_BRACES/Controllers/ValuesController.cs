@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IS_BRACES.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -7,9 +8,12 @@ using System.Web.Http;
 
 namespace IS_BRACES.Controllers
 {
-    [Authorize]
     public class ValuesController : ApiController
     {
+        public List<VacationThumbnail> GetThumbnails() {
+            var v = new VacationThumbnail();
+            return v.GetDemo();
+        }
         // GET api/values
         public IEnumerable<string> Get()
         {

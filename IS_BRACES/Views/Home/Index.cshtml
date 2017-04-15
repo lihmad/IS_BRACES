@@ -1,7 +1,8 @@
-﻿
+﻿@model IS_BRACES.Models.ViewModels.VacationSearch
 @section css{
 
     @Styles.Render("~/Content/datepicker")
+    @Styles.Render("~/Content/select2.min.css")
     <style>
         .jumbotron {
             background: url(../../Content/Images/vacation.jpg) 50% 50%/cover;
@@ -57,22 +58,113 @@
 @section scripts{
 
     @Scripts.Render("~/bundles/datepicker")
+    @Scripts.Render("~/Scripts/select2/select2.min.js")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsrender/0.9.84/jsrender.min.js"></script>
+    <script id="theTmpl" type="text/x-jsrender">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img src="{{:Image}}" alt="{{:Hotel}}">
+                <div class="caption">
+                    <h3>{{:Hotel}}</h3>
+                    <h4>{{:Destination}}</h4>
+                </div>
+                <div>
+                    <p>{{normalDate:DateFrom}} - {{normalDate:DateTo}}</p>
+                    <p>{{:Food}}</p>
+                    <p>{{:Transportation}}</p>
+                </div>
+            </div>
+        </div>
+    </script>
     <script>
         $(function () {
+
+            //$('select').select2({
+            //    language: 'cs'
+            //});
+
+            var yesterday = moment().subtract(1, 'days');
             $('#datetimepicker1').datetimepicker({
                 locale: 'cs',
-                format: 'L'
+                format: 'L',
+                defaultDate: moment(),
+                minDate: moment()
             });
             $('#datetimepicker2').datetimepicker({
+                locale: 'cs',
+                format: 'L',
+                defaultDate: moment().add(7, 'days'),
+                minDate: moment().add(1, 'days'),
                 useCurrent: false //Important! See issue #1075
             });
             $("#datetimepicker1").on("dp.change", function (e) {
-                $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+                var date = $('#datetimepicker2').data("DateTimePicker").date();
+                if (date === null || date === undefined) {
+                    $('#datetimepicker2').data("DateTimePicker").date(moment(e.date).add(7, 'days'));
+                } else {
+                    if (date <= e.date) {
+                        $('#datetimepicker2').data("DateTimePicker").date(moment(e.date).add(1, 'days'));
+                    }
+                }
+
+                $('#datetimepicker2').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
             });
-            $("#datetimepicker2").on("dp.change", function (e) {
-                $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+
+            $('#datetimepicker3').datetimepicker({
+                locale: 'cs',
+                format: 'L',
+                defaultDate: moment(),
+                minDate: moment()
             });
+
+            $('#datetimepicker4').datetimepicker({
+                locale: 'cs',
+                format: 'L',
+                minDate: moment().add(1, 'days'),
+                useCurrent: false //Important! See issue #1075
+            });
+
+            $("#datetimepicker3").on("dp.change", function (e) {
+                $('#datetimepicker4').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
+            });
+            $("#Country").select2({
+                placeholder: "vyberte si zemi kam chcete cestovat"
+            });
+            $("#Food").select2({
+                placeholder: "vyberte si typ stravy"
+            });
+            $("#Hotel").select2({
+                placeholder: "vyberte si úroveň hotelu"
+            });
+            $("#Transportation").select2({
+                placeholder: "vyberte si typ přepravy"
+            });
+            $("#Type").select2({
+                placeholder: "vyberte si druh dovolené"
+            });
+            LoadThumbnails();
         });
+
+        function LoadThumbnails() {
+            moment.locale('cs');
+
+            $.views.converters({
+                normalDate: function (value) {
+                    return moment(value).format("L");
+                }
+            });
+
+            var req = $.ajax({
+                url: '/api/VacationApi',
+                method: "GET"
+            });
+
+            req.done(function (data) {
+                var template = $.templates("#theTmpl");
+                var htmlOutput = template.render(data);
+                $("#content").html(htmlOutput);
+            });
+        }
     </script>
 }
 
@@ -134,4 +226,64 @@
 
     </div>
 
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="filtr">
+                @using (Html.BeginForm("Search", "Holiday", FormMethod.Get, new { @class = "form-group" }))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.DropDownList("Country", Model.CountryList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group date" id="datetimepicker3">
+                                @Html.TextBox("DateFrom", Model.DateFrom, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group date" id="datetimepicker4">
+                                @Html.TextBox("DateTo", Model.DateTo, new { @class = "form-control" })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DropDownList("Duration", Model.DurationList, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownList("Food", Model.FoodList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DropDownList("Hotel", Model.HotelLevelList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownList("Transportation", Model.TransportationList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.DropDownList("Type", Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="content">
+
+        </div>
+    </div>
 </div>

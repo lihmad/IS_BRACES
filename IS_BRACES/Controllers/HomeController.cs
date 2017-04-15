@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using IS_BRACES.Models;
+using IS_BRACES.Models.ViewModels;
 
 namespace IS_BRACES.Controllers
 {
@@ -12,10 +13,8 @@ namespace IS_BRACES.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
-            ViewBag.G = DB.Destinace.First().Zeme;
 
-            return View();
+            return View(new VacationSearch());
         }
     }
 }
