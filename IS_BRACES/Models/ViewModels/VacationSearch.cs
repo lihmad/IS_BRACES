@@ -21,9 +21,9 @@ namespace IS_BRACES.Models.ViewModels
         public List<SelectListItem> TransportationList { get; set; }
         [Display(Name = "Typ zájezdu")]
         public List<SelectListItem> TypeList { get; set; }
-        [Display(Name = "Nejdříve od")]
+        [Display(Name = "Nejdříve od", Prompt = "nejpozději od")]
         public DateTime DateFrom { get; set; }
-        [Display(Name = "Nejpozději do")]
+        [Display(Name = "Nejpozději do", Prompt = "nejpozději do")]
         public DateTime DateTo { get; set; }
 
         public VacationSearch() {

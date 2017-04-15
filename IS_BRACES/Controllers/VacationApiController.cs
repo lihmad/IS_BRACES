@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace IS_BRACES.App_Start
+namespace IS_BRACES.Controllers
 {
     public class VacationApiController : ApiController
     {

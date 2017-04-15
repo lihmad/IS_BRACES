@@ -173,14 +173,14 @@
         <h1>BlueTravel s.r.o.</h1>
         <div class="row">
 
-            @using (Html.BeginForm("FindQuick", "Holiday", FormMethod.Post, new { @class = "form-group form-group-lg" }))
+            @using (Html.BeginForm("FindQuick", "Search", FormMethod.Get, new { @class = "form-group form-group-lg" }))
             {
                 <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                    <input type="text" class="form-control " />
+                    <input type="text" id="find" name="find" class="form-control" />
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2" >
                     <div class="input-group date" id="datetimepicker1">
-                        <input type="text" class="form-control" />
+                        <input type="text" id="datef" name="datef" class="form-control" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -188,7 +188,7 @@
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
                     <div class="input-group date" id="datetimepicker2">
-                        <input type="text" class="form-control" />
+                        <input type="text" id="datet" name="datet" class="form-control" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -231,7 +231,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="filtr">
-                @using (Html.BeginForm("Search", "Holiday", FormMethod.Get, new { @class = "form-group" }))
+                @using (Html.BeginForm("Find", "Search", FormMethod.Get, new { @class = "form-group" }))
                 {
                     <div class="row">
                         <div class="col-md-12">
@@ -249,7 +249,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="input-group date" id="datetimepicker4">
-                                @Html.TextBox("DateTo", Model.DateTo, new { @class = "form-control" })
+                                @Html.TextBox("DateTo", Model.DateTo, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateTo").Watermark })
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -276,6 +276,9 @@
                         <div class="col-md-12">
                             @Html.DropDownList("Type", Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-default">Submit</button>
                     </div>
                 }
             </div>
