@@ -9,7 +9,7 @@ namespace IS_BRACES.Models.ViewModels
 {
     public class VacationSearch
     {
-        [Display (Name = "Země")]
+        [Display(Name = "Země")]
         public List<SelectListItem> CountryList { get; set; }
         [Display(Name = "Délka pobytu")]
         public List<SelectListItem> DurationList { get; set; }
@@ -26,7 +26,8 @@ namespace IS_BRACES.Models.ViewModels
         [Display(Name = "Nejpozději do", Prompt = "nejpozději do")]
         public DateTime DateTo { get; set; }
 
-        public VacationSearch() {
+        public VacationSearch()
+        {
             CountryList = GetCountry();
             DurationList = GetDuration();
             HotelLevelList = GetHotelLevel();
@@ -35,12 +36,25 @@ namespace IS_BRACES.Models.ViewModels
             TypeList = GetType();
         }
 
-        private List<SelectListItem> GetCountry() {
+        public VacationSearch(List<SelectListItem> countries, List<SelectListItem> durations, List<SelectListItem> hotelLevel, List<SelectListItem> foods, List<SelectListItem> transportationa, List<SelectListItem> types)
+        {
+            CountryList = countries;
+            DurationList = durations;
+            HotelLevelList = hotelLevel;
+            FoodList = foods;
+            TransportationList = transportationa;
+            TypeList = types;
+        }
+
+        private List<SelectListItem> GetCountry()
+        {
             var l = new List<SelectListItem>();
-            var f = new List<string>() {"Česká republika", "Chorvatsko", "Velká Británie", "USA", "Slovensko" };
+            var f = new List<string>() { "Česká republika", "Chorvatsko", "Velká Británie", "USA", "Slovensko" };
             var c = 0;
-            foreach (string s in f) {
-                var i = new SelectListItem() {
+            foreach (string s in f)
+            {
+                var i = new SelectListItem()
+                {
                     Text = s,
                     Value = c++.ToString()
                 };
@@ -103,7 +117,7 @@ namespace IS_BRACES.Models.ViewModels
         private List<SelectListItem> GetTransportation()
         {
             var l = new List<SelectListItem>();
-            var f = new List<string>() { "Vlastní", "Autobusem", "Letecky"};
+            var f = new List<string>() { "Vlastní", "Autobusem", "Letecky" };
             var c = 0;
             foreach (string s in f)
             {
