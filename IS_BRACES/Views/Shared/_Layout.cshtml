@@ -5,41 +5,151 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        li {
+            list-style-type: none;
+        }
+        .footer {
+            background-image: url(../../Content/Images/bg.png);
+            background-repeat: repeat;
+            border-top: 2px solid black;
+            padding-top: 10px;
+        }
+        .logo {
+            display: block;
+            width: 83px;
+            height: 85px;
+            zoom: 0.5;
+            -moz-transform: scale(0.5);
+            -moz-transform-origin: 0 0;
+        }
+
+        #youtube {
+            background: url('../../Content/Images/social.jpg') -1055px -866px;
+        }
+
+        #youtube:hover {
+            background: url('../../Content/Images/social.jpg') -1055px -235px;
+        }
+
+        #facebook {
+            background: url('../../Content/Images/social.jpg') -1055px -655px;
+        }
+
+        #facebook:hover {
+            background: url('../../Content/Images/social.jpg') -1055px -25px;
+        }
+
+        #google {
+            background: url('../../Content/Images/social.jpg') -1283px -655px;
+        }
+
+        #google:hover {
+            background: url('../../Content/Images/social.jpg') -1283px -25px;
+        }
+
+        #instagram {
+            background: url('../../Content/Images/social.jpg') -709px -759px;
+        }
+
+        #instagram:hover {
+            background: url('../../Content/Images/social.jpg') -709px -129px;
+        }
+
+        #snapchat {
+            background: url('../../Content/Images/social.jpg') -1169px -759px;
+        }
+
+        #snapchat:hover {
+            background: url('../../Content/Images/social.jpg') -1169px -129px;
+        }
+
+        #twitter {
+            background: url('../../Content/Images/social.jpg') -825px -866px;
+        }
+
+        #twitter:hover {
+            background: url('../../Content/Images/social.jpg') -825px -235px;
+        }
+
+    </style>
     @RenderSection("css", required: false)
-    <script type = 'text/javascript' >
-        var appInsights=window.appInsights||function(config)
-        {
-            function r(config){ t[config] = function(){ var i = arguments; t.queue.push(function(){ t[config].apply(t, i)})} }
-            var t = { config:config},u=document,e=window,o='script',s=u.createElement(o),i,f;for(s.src=config.url||'//az416426.vo.msecnd.net/scripts/a/ai.0.js',u.getElementsByTagName(o)[0].parentNode.appendChild(s),t.cookie=u.cookie,t.queue=[],i=['Event','Exception','Metric','PageView','Trace','Ajax'];i.length;)r('track'+i.pop());return r('setAuthenticatedUserContext'),r('clearAuthenticatedUserContext'),config.disableExceptionTracking||(i='onerror',r('_'+i),f=e[i],e[i]=function(config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o),s}),t
+    <script type='text/javascript'>
+        var appInsights = window.appInsights || function (config) {
+            function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } }
+            var t = { config: config }, u = document, e = window, o = 'script', s = u.createElement(o), i, f; for (s.src = config.url || '//az416426.vo.msecnd.net/scripts/a/ai.0.js', u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ['Event', 'Exception', 'Metric', 'PageView', 'Trace', 'Ajax']; i.length;)r('track' + i.pop()); return r('setAuthenticatedUserContext'), r('clearAuthenticatedUserContext'), config.disableExceptionTracking || (i = 'onerror', r('_' + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t['_' + i](config, r, u, e, o), s }), t
         }({
-            instrumentationKey:'3a409b4d-32ee-408c-8146-4c55692f180c'
+            instrumentationKey: '3a409b4d-32ee-408c-8146-4c55692f180c'
         });
-        
-        window.appInsights=appInsights;
+
+        window.appInsights = appInsights;
         appInsights.trackPageView();
     </script>
 </head>
 <body>
     @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
+        </div>*@
     @RenderBody()
 
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="contact col-md-3">
+                    <ul>
+                        <li><h4>Kontaktní adresa</h4></li>
+                        <li>Blue Travel s.r.o.</li>
+                        <li>Blatenská 11</li>
+                        <li>Chomutov</li>
+                        <li>430 03</li>
+
+                    </ul>
+                </div>
+                <div class="contact col-md-3">
+                    <ul>
+                        <li><h4>Ozvěte se nám</h4></li>
+                        <li><a href="mailto:BlueTravel@bluetravel.cz">BlueTravel@bluetravel.cz</a></li>
+                        <li>Tel: 474 38 882</li>
+                        <li>Fax: 474 38 883</li>
+                    </ul>
+                </div>
+                <div class="contact col-md-3">
+                    <ul>
+                        <li><h4>Bankovní spojení</h4></li>
+                        <li>CZK účet: 6785476542637/0100</li>
+                        <li>EUR účet: 6785476542637/0100</li>
+                    </ul>
+                </div>
+                <div class="social col-md-3">
+                    <h4>Sociální sítě</h4>
+                    <a href="https://youtube.com"><span class="logo col-md-2" id="youtube"></span></a>
+                    <a href="https://facebook.com"><span class="logo col-md-2" id="facebook"></span></a>
+                    <a href="https://plus.google.com"><span class="logo col-md-2" id="google"></span></a>
+                    <a href="https://snapchat.com"><span class="logo col-md-2" id="snapchat"></span></a>
+                    <a href="https://twitter.com"><span class="logo col-md-2" id="twitter"></span></a>
+                    <a href="https://instagram.com"><span class="logo col-md-2" id="instagram"></span></a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/moment")
     @Scripts.Render("~/bundles/bootstrap")

@@ -382,7 +382,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\bg.png" />
     <Content Include="Content\Images\vacation.jpg" />
+    <Content Include="Content\Images\social.jpg" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="favicon.ico" />
