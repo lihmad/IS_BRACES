@@ -10,6 +10,9 @@
             padding-top: 0px;
         }
 
+        .star-hotel {
+            color: gold;
+        }
 
         /*https://icons8.com/web-app/40914/alps*/
         .icon_mountain {
@@ -136,7 +139,8 @@
                 placeholder: "vyberte si typ stravy"
             });
             $("#Hotel").select2({
-                placeholder: "vyberte si úroveň hotelu"
+                placeholder: "vyberte si úroveň hotelu",
+                templateResult: imgStarHotel
             });
             $("#Transportation").select2({
                 placeholder: "vyberte si typ přepravy"
@@ -146,6 +150,21 @@
             });
             LoadThumbnails();
         });
+
+        function imgStarHotel(hotel) {
+            var i = parseInt(hotel.id);
+            if (i !== null || i !== undefined) {
+                var span = '';
+                for (var z = 0; z < i; z++) {
+                    span += '<span class="glyphicon glyphicon-star star-hotel" aria-hidden="true"></span>'
+                }
+                var $hotel = $(span);
+                return $hotel;
+            }
+
+            return hotel.text;
+            
+        }
 
         function LoadThumbnails() {
             moment.locale('cs');
