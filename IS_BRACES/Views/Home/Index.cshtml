@@ -120,6 +120,7 @@
             $('#datetimepicker4').datetimepicker({
                 locale: 'cs',
                 format: 'L',
+                defaultDate: moment().add(14, 'days'),
                 minDate: moment().add(1, 'days'),
                 useCurrent: false //Important! See issue #1075
             });
@@ -127,6 +128,7 @@
             $("#datetimepicker3").on("dp.change", function (e) {
                 $('#datetimepicker4').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
             });
+
             $("#Country").select2({
                 placeholder: "vyberte si zemi kam chcete cestovat"
             });
