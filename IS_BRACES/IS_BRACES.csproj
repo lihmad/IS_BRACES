@@ -255,6 +255,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\VacationController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dialogs\MainDialog.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
@@ -578,6 +579,7 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Search\Find.cshtml" />
+    <Content Include="Views\Vacation\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

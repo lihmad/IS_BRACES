@@ -15,6 +15,7 @@ namespace IS_BRACES.Models.ViewModels
         public string Transportation { get; set; }
         public string Food { get; set; }
         public string Image { get; set; }//base64
+        public Guid Id { get; set; }
 
         public List<VacationThumbnail> GetDemo(int num = 8) {
 
@@ -23,6 +24,7 @@ namespace IS_BRACES.Models.ViewModels
             for (var i = 0; i < num; i++) {
                 var v = new VacationThumbnail()
                 {
+                    Id = new Guid(),
                     Destination = "Praha",
                     Hotel = "Hotel Pyramida",
                     DateFrom = DateTime.Now,
