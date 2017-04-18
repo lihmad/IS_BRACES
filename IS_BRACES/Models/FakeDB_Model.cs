@@ -34,6 +34,7 @@ namespace IS_BRACES.Models
         public System.Data.Entity.DbSet<TypUbytovani> TypUbytovani { get; set; }
         public System.Data.Entity.DbSet<TypZajezdu> TypZajezdu { get; set; }
         public System.Data.Entity.DbSet<Ubytovani> Ubytovani { get; set; }
+        public System.Data.Entity.DbSet<VazTZajezdTypZajezdu> VazTZajezdTypZajezdu { get; set; }
         public System.Data.Entity.DbSet<VazTZakaznikZajezd> VazTZakaznikZajezd { get; set; }
         public System.Data.Entity.DbSet<Zajezdy> Zajezdy { get; set; }
         public System.Data.Entity.DbSet<Zakaznici> Zakaznici { get; set; }
@@ -55,6 +56,7 @@ namespace IS_BRACES.Models
             TypUbytovani = new FakeDbSet<TypUbytovani>("Id");
             TypZajezdu = new FakeDbSet<TypZajezdu>("Id");
             Ubytovani = new FakeDbSet<Ubytovani>("Id");
+            VazTZajezdTypZajezdu = new FakeDbSet<VazTZajezdTypZajezdu>("Id", "IdZajezdy", "IdTypZajezdu");
             VazTZakaznikZajezd = new FakeDbSet<VazTZakaznikZajezd>("Id");
             Zajezdy = new FakeDbSet<Zajezdy>("Id");
             Zakaznici = new FakeDbSet<Zakaznici>("Id");

@@ -33,9 +33,10 @@ namespace IS_BRACES.Models
             Property(x => x.IdTypUbytovani).HasColumnName(@"ID_Typ_ubytovani").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.PocetHvezd).HasColumnName(@"Pocet_hvezd").HasColumnType("int").IsOptional();
             Property(x => x.Popis).HasColumnName(@"Popis").HasColumnType("varchar(max)").IsRequired().IsUnicode(false);
+            Property(x => x.Nazev).HasColumnName(@"Nazev").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(50);
 
             // Foreign keys
-            HasRequired(a => a.Adresa).WithOptional(b => b.Ubytovani).WillCascadeOnDelete(false); // FK_Ubytovani_Adresa
+            HasOptional(a => a.Adresa).WithMany(b => b.Ubytovani).HasForeignKey(c => c.IdAdresa).WillCascadeOnDelete(false); // FK_Ubytovani_Adresa
             HasRequired(a => a.TypUbytovani).WithMany(b => b.Ubytovani).HasForeignKey(c => c.IdTypUbytovani).WillCascadeOnDelete(false); // FK_Ubytovani_Typ_ubytovani
             InitializePartial();
         }

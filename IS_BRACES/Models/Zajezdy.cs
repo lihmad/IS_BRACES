@@ -19,7 +19,6 @@ namespace IS_BRACES.Models
     public partial class Zajezdy
     {
         public System.Guid Id { get; set; } // ID (Primary key)
-        public System.Guid IdTypZajezdu { get; set; } // ID_Typ_zajezdu
         public System.Guid IdDestinace { get; set; } // ID_Destinace
         public System.Guid IdDoprava { get; set; } // ID_Doprava
         public System.Guid IdStravovani { get; set; } // ID_Stravovani
@@ -38,6 +37,10 @@ namespace IS_BRACES.Models
         /// Child Rezervace where [Rezervace].[ID_Zajezdu] point to this entity (FK_Rezervace_Zajezdy)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Rezervace> Rezervace { get; set; } // Rezervace.FK_Rezervace_Zajezdy
+        /// <summary>
+        /// Child VazTZajezdTypZajezdu where [VazT_Zajezd_TypZajezdu].[ID_Zajezdy] point to this entity (FK_VazT_Zajezd_TypZajezdu_Zajezdy)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<VazTZajezdTypZajezdu> VazTZajezdTypZajezdu { get; set; } // VazT_Zajezd_TypZajezdu.FK_VazT_Zajezd_TypZajezdu_Zajezdy
         /// <summary>
         /// Child VazTZakaznikZajezd where [VazT_Zakaznik_Zajezd].[ID_Zajezd] point to this entity (FK_VazT_Zakaznik_Zajezd_Zajezdy)
         /// </summary>
@@ -62,10 +65,6 @@ namespace IS_BRACES.Models
         /// </summary>
         public virtual Stravovani Stravovani { get; set; } // FK_Zajezdy_Stravovani
         /// <summary>
-        /// Parent TypZajezdu pointed by [Zajezdy].([IdTypZajezdu]) (FK_Zajezdy_Typ_zajezdu)
-        /// </summary>
-        public virtual TypZajezdu TypZajezdu { get; set; } // FK_Zajezdy_Typ_zajezdu
-        /// <summary>
         /// Parent Ubytovani pointed by [Zajezdy].([IdUbytovani]) (FK_Zajezdy_Typ_ubytovani)
         /// </summary>
         public virtual Ubytovani Ubytovani { get; set; } // FK_Zajezdy_Typ_ubytovani
@@ -74,6 +73,7 @@ namespace IS_BRACES.Models
         {
             Id = System.Guid.NewGuid();
             Rezervace = new System.Collections.Generic.List<Rezervace>();
+            VazTZajezdTypZajezdu = new System.Collections.Generic.List<VazTZajezdTypZajezdu>();
             VazTZakaznikZajezd = new System.Collections.Generic.List<VazTZakaznikZajezd>();
             InitializePartial();
         }

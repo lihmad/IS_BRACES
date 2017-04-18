@@ -23,6 +23,7 @@ namespace IS_BRACES.Models
         public System.Guid IdTypUbytovani { get; set; } // ID_Typ_ubytovani
         public int? PocetHvezd { get; set; } // Pocet_hvezd
         public string Popis { get; set; } // Popis
+        public string Nazev { get; set; } // Nazev (length: 50)
 
         // Reverse navigation
 
@@ -42,7 +43,7 @@ namespace IS_BRACES.Models
         // Foreign keys
 
         /// <summary>
-        /// Parent Adresa pointed by [Ubytovani].([Id]) (FK_Ubytovani_Adresa)
+        /// Parent Adresa pointed by [Ubytovani].([IdAdresa]) (FK_Ubytovani_Adresa)
         /// </summary>
         public virtual Adresa Adresa { get; set; } // FK_Ubytovani_Adresa
         /// <summary>
@@ -52,6 +53,7 @@ namespace IS_BRACES.Models
 
         public Ubytovani()
         {
+            Id = System.Guid.NewGuid();
             Pokoje = new System.Collections.Generic.List<Pokoje>();
             Prilohy = new System.Collections.Generic.List<Prilohy>();
             Zajezdy = new System.Collections.Generic.List<Zajezdy>();

@@ -13,45 +13,25 @@ namespace IS_BRACES.Models.ViewModels
         public string Destination { get; set; }
         private Guid DestinationId { get; set; }
         public int? NumberOfStar { get; set; }
+        public List<string> TypZajezdu { get; set; }
         public string PopisUby { get; set; }
         public string TypeOfAcco { get; set; }
         private Guid UbytovaniId { get; set; }
-        public List<SelectListItem> chooseList { get; set; }
-        public string Image { get; set; }//base64
+        public List<SelectListItem> ChooseList { get; set; }
+        public List<string> Image { get; set; }//base64
         public Guid Id { get; set; }
 
         public CompleteVacation(DB_Model db, Guid id)
         {
-            UbytovaniId = db.Zajezdy.Find(id).Ubytovani.Id;
-            DestinationId = db.Zajezdy.Find(id).Destinace.Id;
-            Destination = GetCountryDB(db, id);
-            TypeOfAcco = GetTypeOfAcco(db, id);
-            NumberOfStar = GetNumberOfStar(db, id);
-            PopisUby = GetPopisUby(db, id);
-            chooseList = GetChooseList(UbytovaniId, DestinationId, db);
+            var zajezd = db.Zajezdy.Find(id);
             var image = new ImageHelper();
-            Image = image.GetTestBase64();
-        }
-
-        private string GetCountryDB(DB_Model DB, Guid id)
-        {
-            return DB.Zajezdy.Find(id).Destinace.Zeme.ToString();
-        }
-
-        private string GetTypeOfAcco(DB_Model DB, Guid id)
-        {
-            return DB.Zajezdy.Find(id).Ubytovani.TypUbytovani.Typ.ToString();
-        }
-
-        private int? GetNumberOfStar(DB_Model DB, Guid id)
-        {
-            return DB.Zajezdy.Find(id).Ubytovani.PocetHvezd;
-        }
-
-        private string GetPopisUby(DB_Model DB, Guid id)
-        {
-            
-            return DB.Zajezdy.Find(id).Ubytovani.Popis;
+            Image.Add(image.GetTestBase64());
+            Destination = zajezd.Destinace.Zeme;
+            TypZajezdu = zajezd.VazTZajezdTypZajezdu.Select(x => x.TypZajezdu.Popis).ToList();
+            TypeOfAcco = zajezd.Ubytovani.TypUbytovani.Typ;
+            NumberOfStar = zajezd.Ubytovani.PocetHvezd;
+            PopisUby = zajezd.Ubytovani.Popis;
+            ChooseList = GetChooseList(zajezd.Ubytovani.Id, zajezd.Destinace.Id, db);
         }
 
         private List<SelectListItem> GetChooseList(Guid idUbytovani, Guid idDestinace, DB_Model DB)
@@ -62,6 +42,8 @@ namespace IS_BRACES.Models.ViewModels
 
             foreach (Zajezdy zajezd in zajezdyTest)
             {
+                //TODO: pridat pokoj z ubytovani
+                //TODO: datum zruseni je na neco jineho pouzit delku pobytu
                 StringBuilder sb = new StringBuilder();
                 sb.Append(zajezd.DatumOd);
                 sb.Append(" - ");

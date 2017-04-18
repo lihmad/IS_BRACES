@@ -31,6 +31,7 @@ namespace IS_BRACES.Models
 
         public Prilohy()
         {
+            Id = System.Guid.NewGuid();
             InitializePartial();
         }
 

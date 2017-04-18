@@ -34,6 +34,7 @@ namespace IS_BRACES.Models
         public System.Data.Entity.DbSet<TypUbytovani> TypUbytovani { get; set; } // Typ_ubytovani
         public System.Data.Entity.DbSet<TypZajezdu> TypZajezdu { get; set; } // Typ_zajezdu
         public System.Data.Entity.DbSet<Ubytovani> Ubytovani { get; set; } // Ubytovani
+        public System.Data.Entity.DbSet<VazTZajezdTypZajezdu> VazTZajezdTypZajezdu { get; set; } // VazT_Zajezd_TypZajezdu
         public System.Data.Entity.DbSet<VazTZakaznikZajezd> VazTZakaznikZajezd { get; set; } // VazT_Zakaznik_Zajezd
         public System.Data.Entity.DbSet<Zajezdy> Zajezdy { get; set; } // Zajezdy
         public System.Data.Entity.DbSet<Zakaznici> Zakaznici { get; set; } // Zakaznici
@@ -41,7 +42,7 @@ namespace IS_BRACES.Models
         static DB_Model()
         {
             System.Data.Entity.Database.SetInitializer<DB_Model>(null);
-           // DB_ModelStaticPartial(); // Create the following method in your partial class: private static void DB_ModelStaticPartial() { }
+            //DB_ModelStaticPartial(); // Create the following method in your partial class: private static void DB_ModelStaticPartial() { }
         }
 
         public DB_Model()
@@ -107,6 +108,7 @@ namespace IS_BRACES.Models
             modelBuilder.Configurations.Add(new TypUbytovaniConfiguration());
             modelBuilder.Configurations.Add(new TypZajezduConfiguration());
             modelBuilder.Configurations.Add(new UbytovaniConfiguration());
+            modelBuilder.Configurations.Add(new VazTZajezdTypZajezduConfiguration());
             modelBuilder.Configurations.Add(new VazTZakaznikZajezdConfiguration());
             modelBuilder.Configurations.Add(new ZajezdyConfiguration());
             modelBuilder.Configurations.Add(new ZakazniciConfiguration());
@@ -131,6 +133,7 @@ namespace IS_BRACES.Models
             modelBuilder.Configurations.Add(new TypUbytovaniConfiguration(schema));
             modelBuilder.Configurations.Add(new TypZajezduConfiguration(schema));
             modelBuilder.Configurations.Add(new UbytovaniConfiguration(schema));
+            modelBuilder.Configurations.Add(new VazTZajezdTypZajezduConfiguration(schema));
             modelBuilder.Configurations.Add(new VazTZakaznikZajezdConfiguration(schema));
             modelBuilder.Configurations.Add(new ZajezdyConfiguration(schema));
             modelBuilder.Configurations.Add(new ZakazniciConfiguration(schema));

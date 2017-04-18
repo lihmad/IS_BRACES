@@ -27,17 +27,18 @@ namespace IS_BRACES.Models
         // Reverse navigation
 
         /// <summary>
+        /// Child Ubytovani where [Ubytovani].[ID_Adresa] point to this entity (FK_Ubytovani_Adresa)
+        /// </summary>
+        public virtual System.Collections.Generic.ICollection<Ubytovani> Ubytovani { get; set; } // Ubytovani.FK_Ubytovani_Adresa
+        /// <summary>
         /// Child Zakaznici where [Zakaznici].[ID_Bydliste] point to this entity (FK_Zakaznici_Adresa)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Zakaznici> Zakaznici { get; set; } // Zakaznici.FK_Zakaznici_Adresa
-        /// <summary>
-        /// Parent (One-to-One) Adresa pointed by [Ubytovani].[ID] (FK_Ubytovani_Adresa)
-        /// </summary>
-        public virtual Ubytovani Ubytovani { get; set; } // Ubytovani.FK_Ubytovani_Adresa
 
         public Adresa()
         {
             Id = System.Guid.NewGuid();
+            Ubytovani = new System.Collections.Generic.List<Ubytovani>();
             Zakaznici = new System.Collections.Generic.List<Zakaznici>();
             InitializePartial();
         }

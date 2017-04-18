@@ -14,25 +14,27 @@
 namespace IS_BRACES.Models
 {
 
-    // Pokoje
+    // VazT_Zajezd_TypZajezdu
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.29.1.0")]
-    public partial class Pokoje
+    public partial class VazTZajezdTypZajezdu
     {
         public System.Guid Id { get; set; } // ID (Primary key)
-        public System.Guid IdUbytovani { get; set; } // ID_Ubytovani (Primary key)
-        public int Kapacita { get; set; } // Kapacita (Primary key)
-        public string Popis { get; set; } // Popis
+        public System.Guid IdZajezdy { get; set; } // ID_Zajezdy (Primary key)
+        public System.Guid IdTypZajezdu { get; set; } // ID_Typ_zajezdu (Primary key)
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Ubytovani pointed by [Pokoje].([IdUbytovani]) (FK_Pokoje_Ubytovani)
+        /// Parent TypZajezdu pointed by [VazT_Zajezd_TypZajezdu].([IdTypZajezdu]) (FK_VazT_Zajezd_TypZajezdu_Typ_zajezdu)
         /// </summary>
-        public virtual Ubytovani Ubytovani { get; set; } // FK_Pokoje_Ubytovani
+        public virtual TypZajezdu TypZajezdu { get; set; } // FK_VazT_Zajezd_TypZajezdu_Typ_zajezdu
+        /// <summary>
+        /// Parent Zajezdy pointed by [VazT_Zajezd_TypZajezdu].([IdZajezdy]) (FK_VazT_Zajezd_TypZajezdu_Zajezdy)
+        /// </summary>
+        public virtual Zajezdy Zajezdy { get; set; } // FK_VazT_Zajezd_TypZajezdu_Zajezdy
 
-        public Pokoje()
+        public VazTZajezdTypZajezdu()
         {
-            Id = System.Guid.NewGuid();
             InitializePartial();
         }
 

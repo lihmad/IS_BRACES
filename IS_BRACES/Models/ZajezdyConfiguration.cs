@@ -29,7 +29,6 @@ namespace IS_BRACES.Models
             HasKey(x => x.Id);
 
             Property(x => x.Id).HasColumnName(@"ID").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.IdTypZajezdu).HasColumnName(@"ID_Typ_zajezdu").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdDestinace).HasColumnName(@"ID_Destinace").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdDoprava).HasColumnName(@"ID_Doprava").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdStravovani).HasColumnName(@"ID_Stravovani").HasColumnType("uniqueidentifier").IsRequired();
@@ -47,7 +46,6 @@ namespace IS_BRACES.Models
             HasRequired(a => a.Doprava).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdDoprava).WillCascadeOnDelete(false); // FK_Zajezdy_Doprava
             HasRequired(a => a.Kategorie).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdKategorie).WillCascadeOnDelete(false); // FK_Zajezdy_Kategorie
             HasRequired(a => a.Stravovani).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdStravovani).WillCascadeOnDelete(false); // FK_Zajezdy_Stravovani
-            HasRequired(a => a.TypZajezdu).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdTypZajezdu).WillCascadeOnDelete(false); // FK_Zajezdy_Typ_zajezdu
             HasRequired(a => a.Ubytovani).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdUbytovani).WillCascadeOnDelete(false); // FK_Zajezdy_Typ_ubytovani
             InitializePartial();
         }

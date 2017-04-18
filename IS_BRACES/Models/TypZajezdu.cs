@@ -24,14 +24,14 @@ namespace IS_BRACES.Models
         // Reverse navigation
 
         /// <summary>
-        /// Child Zajezdy where [Zajezdy].[ID_Typ_zajezdu] point to this entity (FK_Zajezdy_Typ_zajezdu)
+        /// Child VazTZajezdTypZajezdu where [VazT_Zajezd_TypZajezdu].[ID_Typ_zajezdu] point to this entity (FK_VazT_Zajezd_TypZajezdu_Typ_zajezdu)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<Zajezdy> Zajezdy { get; set; } // Zajezdy.FK_Zajezdy_Typ_zajezdu
+        public virtual System.Collections.Generic.ICollection<VazTZajezdTypZajezdu> VazTZajezdTypZajezdu { get; set; } // VazT_Zajezd_TypZajezdu.FK_VazT_Zajezd_TypZajezdu_Typ_zajezdu
 
         public TypZajezdu()
         {
             Id = System.Guid.NewGuid();
-            Zajezdy = new System.Collections.Generic.List<Zajezdy>();
+            VazTZajezdTypZajezdu = new System.Collections.Generic.List<VazTZajezdTypZajezdu>();
             InitializePartial();
         }
 
