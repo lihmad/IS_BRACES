@@ -30,6 +30,10 @@ namespace IS_BRACES.Models
         /// Child Zakaznici where [Zakaznici].[ID_Bydliste] point to this entity (FK_Zakaznici_Adresa)
         /// </summary>
         public virtual System.Collections.Generic.ICollection<Zakaznici> Zakaznici { get; set; } // Zakaznici.FK_Zakaznici_Adresa
+        /// <summary>
+        /// Parent (One-to-One) Adresa pointed by [Ubytovani].[ID] (FK_Ubytovani_Adresa)
+        /// </summary>
+        public virtual Ubytovani Ubytovani { get; set; } // Ubytovani.FK_Ubytovani_Adresa
 
         public Adresa()
         {

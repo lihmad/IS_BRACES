@@ -26,11 +26,14 @@ namespace IS_BRACES.Models
         public System.Data.Entity.DbSet<KontaktniUdaje> KontaktniUdaje { get; set; }
         public System.Data.Entity.DbSet<Pojisteni> Pojisteni { get; set; }
         public System.Data.Entity.DbSet<Pojistovny> Pojistovny { get; set; }
+        public System.Data.Entity.DbSet<Pokoje> Pokoje { get; set; }
+        public System.Data.Entity.DbSet<Prilohy> Prilohy { get; set; }
         public System.Data.Entity.DbSet<Rezervace> Rezervace { get; set; }
         public System.Data.Entity.DbSet<Stravovani> Stravovani { get; set; }
         public System.Data.Entity.DbSet<sys_DatabaseFirewallRules> sys_DatabaseFirewallRules { get; set; }
         public System.Data.Entity.DbSet<TypUbytovani> TypUbytovani { get; set; }
         public System.Data.Entity.DbSet<TypZajezdu> TypZajezdu { get; set; }
+        public System.Data.Entity.DbSet<Ubytovani> Ubytovani { get; set; }
         public System.Data.Entity.DbSet<VazTZakaznikZajezd> VazTZakaznikZajezd { get; set; }
         public System.Data.Entity.DbSet<Zajezdy> Zajezdy { get; set; }
         public System.Data.Entity.DbSet<Zakaznici> Zakaznici { get; set; }
@@ -44,11 +47,14 @@ namespace IS_BRACES.Models
             KontaktniUdaje = new FakeDbSet<KontaktniUdaje>("Id");
             Pojisteni = new FakeDbSet<Pojisteni>("Id");
             Pojistovny = new FakeDbSet<Pojistovny>("Id");
+            Pokoje = new FakeDbSet<Pokoje>("Id", "IdUbytovani", "Kapacita");
+            Prilohy = new FakeDbSet<Prilohy>("Id", "Priloha", "IdUbytovani");
             Rezervace = new FakeDbSet<Rezervace>("Id");
             Stravovani = new FakeDbSet<Stravovani>("Id");
             sys_DatabaseFirewallRules = new FakeDbSet<sys_DatabaseFirewallRules>("Id", "Name", "StartIpAddress", "EndIpAddress", "CreateDate", "ModifyDate");
             TypUbytovani = new FakeDbSet<TypUbytovani>("Id");
             TypZajezdu = new FakeDbSet<TypZajezdu>("Id");
+            Ubytovani = new FakeDbSet<Ubytovani>("Id");
             VazTZakaznikZajezd = new FakeDbSet<VazTZakaznikZajezd>("Id");
             Zajezdy = new FakeDbSet<Zajezdy>("Id");
             Zakaznici = new FakeDbSet<Zakaznici>("Id");

@@ -9,7 +9,7 @@
 // The following connection settings were used to generate this file:
 //     Configuration file:     "IS_BRACES\Web.config"
 //     Connection String Name: "DB"
-//     Connection String:      "Data Source=tcp:dbs-srv-01.database.windows.net,1433;Initial Catalog=MOIS_DBS;Integrated Security=False;User Id=mois@dbs-srv-01;password=**zapped**;;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"
+//     Connection String:      "Data Source=tcp:dbs-srv-01.database.windows.net,1433;Initial Catalog=DB;Integrated Security=False;User Id=mois@dbs-srv-01;password=**zapped**;;Encrypt=True;TrustServerCertificate=False;MultipleActiveResultSets=True"
 // ------------------------------------------------------------------------------------------------
 // Database Edition       : SQL Azure
 // Database Engine Edition: Azure

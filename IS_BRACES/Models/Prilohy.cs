@@ -14,24 +14,23 @@
 namespace IS_BRACES.Models
 {
 
-    // Typ_ubytovani
+    // Prilohy
     [System.CodeDom.Compiler.GeneratedCode("EF.Reverse.POCO.Generator", "2.29.1.0")]
-    public partial class TypUbytovani
+    public partial class Prilohy
     {
         public System.Guid Id { get; set; } // ID (Primary key)
-        public string Typ { get; set; } // Typ
+        public byte[] Priloha { get; set; } // Priloha (Primary key) (length: 2147483647)
+        public System.Guid IdUbytovani { get; set; } // ID_Ubytovani (Primary key)
 
-        // Reverse navigation
+        // Foreign keys
 
         /// <summary>
-        /// Child Ubytovani where [Ubytovani].[ID_Typ_ubytovani] point to this entity (FK_Ubytovani_Typ_ubytovani)
+        /// Parent Ubytovani pointed by [Prilohy].([IdUbytovani]) (FK_Prilohy_Ubytovani)
         /// </summary>
-        public virtual System.Collections.Generic.ICollection<Ubytovani> Ubytovani { get; set; } // Ubytovani.FK_Ubytovani_Typ_ubytovani
+        public virtual Ubytovani Ubytovani { get; set; } // FK_Prilohy_Ubytovani
 
-        public TypUbytovani()
+        public Prilohy()
         {
-            Id = System.Guid.NewGuid();
-            Ubytovani = new System.Collections.Generic.List<Ubytovani>();
             InitializePartial();
         }
 

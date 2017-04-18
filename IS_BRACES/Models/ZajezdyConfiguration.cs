@@ -33,7 +33,7 @@ namespace IS_BRACES.Models
             Property(x => x.IdDestinace).HasColumnName(@"ID_Destinace").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdDoprava).HasColumnName(@"ID_Doprava").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdStravovani).HasColumnName(@"ID_Stravovani").HasColumnType("uniqueidentifier").IsRequired();
-            Property(x => x.IdTypUbytovani).HasColumnName(@"ID_Typ_ubytovani").HasColumnType("uniqueidentifier").IsRequired();
+            Property(x => x.IdUbytovani).HasColumnName(@"ID_Ubytovani").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.IdKategorie).HasColumnName(@"ID_Kategorie").HasColumnType("uniqueidentifier").IsRequired();
             Property(x => x.DatumOd).HasColumnName(@"Datum_od").HasColumnType("datetime2").IsRequired();
             Property(x => x.DelkaPobytu).HasColumnName(@"Delka_pobytu").HasColumnType("int").IsRequired();
@@ -47,8 +47,8 @@ namespace IS_BRACES.Models
             HasRequired(a => a.Doprava).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdDoprava).WillCascadeOnDelete(false); // FK_Zajezdy_Doprava
             HasRequired(a => a.Kategorie).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdKategorie).WillCascadeOnDelete(false); // FK_Zajezdy_Kategorie
             HasRequired(a => a.Stravovani).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdStravovani).WillCascadeOnDelete(false); // FK_Zajezdy_Stravovani
-            HasRequired(a => a.TypUbytovani).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdTypUbytovani).WillCascadeOnDelete(false); // FK_Zajezdy_Typ_ubytovani
             HasRequired(a => a.TypZajezdu).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdTypZajezdu).WillCascadeOnDelete(false); // FK_Zajezdy_Typ_zajezdu
+            HasRequired(a => a.Ubytovani).WithMany(b => b.Zajezdy).HasForeignKey(c => c.IdUbytovani).WillCascadeOnDelete(false); // FK_Zajezdy_Typ_ubytovani
             InitializePartial();
         }
         partial void InitializePartial();

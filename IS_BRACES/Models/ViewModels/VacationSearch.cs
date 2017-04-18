@@ -48,7 +48,6 @@ namespace IS_BRACES.Models.ViewModels
 
         private List<SelectListItem> GetCountryDB(DB_Model DB)
         {
-            //TODO J: timhle bych si nebyl tak jisty, chceme jenom zeme tohle vytahne vsechny destinace a tech muze byt v jedne zemi vice
             var l = new List<SelectListItem>();
             List<Destinace> destinationDB = DB.Destinace.ToList();
             foreach (Destinace desti in destinationDB)

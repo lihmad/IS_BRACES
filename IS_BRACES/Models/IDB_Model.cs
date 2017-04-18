@@ -23,11 +23,14 @@ namespace IS_BRACES.Models
         System.Data.Entity.DbSet<KontaktniUdaje> KontaktniUdaje { get; set; } // Kontaktni_udaje
         System.Data.Entity.DbSet<Pojisteni> Pojisteni { get; set; } // Pojisteni
         System.Data.Entity.DbSet<Pojistovny> Pojistovny { get; set; } // Pojistovny
+        System.Data.Entity.DbSet<Pokoje> Pokoje { get; set; } // Pokoje
+        System.Data.Entity.DbSet<Prilohy> Prilohy { get; set; } // Prilohy
         System.Data.Entity.DbSet<Rezervace> Rezervace { get; set; } // Rezervace
         System.Data.Entity.DbSet<Stravovani> Stravovani { get; set; } // Stravovani
         System.Data.Entity.DbSet<sys_DatabaseFirewallRules> sys_DatabaseFirewallRules { get; set; } // database_firewall_rules
         System.Data.Entity.DbSet<TypUbytovani> TypUbytovani { get; set; } // Typ_ubytovani
         System.Data.Entity.DbSet<TypZajezdu> TypZajezdu { get; set; } // Typ_zajezdu
+        System.Data.Entity.DbSet<Ubytovani> Ubytovani { get; set; } // Ubytovani
         System.Data.Entity.DbSet<VazTZakaznikZajezd> VazTZakaznikZajezd { get; set; } // VazT_Zakaznik_Zajezd
         System.Data.Entity.DbSet<Zajezdy> Zajezdy { get; set; } // Zajezdy
         System.Data.Entity.DbSet<Zakaznici> Zakaznici { get; set; } // Zakaznici

@@ -23,7 +23,7 @@ namespace IS_BRACES.Models
         public System.Guid IdDestinace { get; set; } // ID_Destinace
         public System.Guid IdDoprava { get; set; } // ID_Doprava
         public System.Guid IdStravovani { get; set; } // ID_Stravovani
-        public System.Guid IdTypUbytovani { get; set; } // ID_Typ_ubytovani
+        public System.Guid IdUbytovani { get; set; } // ID_Ubytovani
         public System.Guid IdKategorie { get; set; } // ID_Kategorie
         public System.DateTime DatumOd { get; set; } // Datum_od
         public int DelkaPobytu { get; set; } // Delka_pobytu
@@ -62,13 +62,13 @@ namespace IS_BRACES.Models
         /// </summary>
         public virtual Stravovani Stravovani { get; set; } // FK_Zajezdy_Stravovani
         /// <summary>
-        /// Parent TypUbytovani pointed by [Zajezdy].([IdTypUbytovani]) (FK_Zajezdy_Typ_ubytovani)
-        /// </summary>
-        public virtual TypUbytovani TypUbytovani { get; set; } // FK_Zajezdy_Typ_ubytovani
-        /// <summary>
         /// Parent TypZajezdu pointed by [Zajezdy].([IdTypZajezdu]) (FK_Zajezdy_Typ_zajezdu)
         /// </summary>
         public virtual TypZajezdu TypZajezdu { get; set; } // FK_Zajezdy_Typ_zajezdu
+        /// <summary>
+        /// Parent Ubytovani pointed by [Zajezdy].([IdUbytovani]) (FK_Zajezdy_Typ_ubytovani)
+        /// </summary>
+        public virtual Ubytovani Ubytovani { get; set; } // FK_Zajezdy_Typ_ubytovani
 
         public Zajezdy()
         {
