@@ -41,7 +41,7 @@ namespace IS_BRACES.Models
         static DB_Model()
         {
             System.Data.Entity.Database.SetInitializer<DB_Model>(null);
-            DB_ModelStaticPartial(); // Create the following method in your partial class: private static void DB_ModelStaticPartial() { }
+           // DB_ModelStaticPartial(); // Create the following method in your partial class: private static void DB_ModelStaticPartial() { }
         }
 
         public DB_Model()

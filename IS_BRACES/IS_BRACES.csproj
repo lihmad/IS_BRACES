@@ -376,6 +376,7 @@
     <Compile Include="Models\VazTZakaznikZajezdConfiguration.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\CompleteVacation.cs" />
     <Compile Include="Models\ViewModels\VacationSearch.cs" />
     <Compile Include="Models\ViewModels\VacationThumbnail.cs" />
     <Compile Include="Models\Zajezdy.cs">
