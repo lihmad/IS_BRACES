@@ -14,7 +14,7 @@ namespace IS_BRACES.Controllers
         public ActionResult Index()
         {
             //            return View(getVacationSearchFromDb());
-            return View(new VacationSearch());
+            return View(new VacationSearch(DB));
         }
 
         private VacationSearch getVacationSearchFromDb()

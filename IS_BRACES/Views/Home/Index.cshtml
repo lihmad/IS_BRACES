@@ -65,6 +65,10 @@
             text-decoration: none;
             color: rgb(51, 51, 51);
         }
+
+        .filtr .row {
+            margin-bottom: 10px;
+        }
     </style>
 }
 
@@ -150,20 +154,26 @@
                 $('#datetimepicker4').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
             });
 
-            $("#Country").select2({
+            $("#Countries").select2({
                 placeholder: "vyberte si zemi kam chcete cestovat"
             });
-            $("#Food").select2({
+            $("#Foods").select2({
                 placeholder: "vyberte si typ stravy"
             });
-            $("#Hotel").select2({
+            $("#Durations").select2({
+                placeholder: "vyberte si cenu zájezdu"
+            });
+            $("#Prices").select2({
+                placeholder: "vyberte si cenu zájezdu"
+            });
+            $("#HotelLevels").select2({
                 placeholder: "vyberte si úroveň hotelu",
                 templateResult: imgStarHotel
             });
-            $("#Transportation").select2({
+            $("#Transportations").select2({
                 placeholder: "vyberte si typ přepravy"
             });
-            $("#Type").select2({
+            $("#Types").select2({
                 placeholder: "vyberte si druh dovolené"
             });
             LoadThumbnails();
@@ -268,25 +278,26 @@
 </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-offset-2 col-md-8">
             <div class="filtr">
                 @using (Html.BeginForm("Find", "Search", FormMethod.Get, new { @class = "form-group" }))
                 {
                     <div class="row">
                         <div class="col-md-12">
-                            @Html.DropDownList("Country", Model.CountryList, new { @class = "form-control", @multiple = "multiple" })
+                            @*@Html.DropDownList("Country", Model.CountryList, new { @class = "form-control", @multiple = "multiple" })*@
+                            @Html.DropDownListFor(x => x.Countries, Model.CountryList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="input-group date" id="datetimepicker3">
-                                @Html.TextBox("DateFrom", Model.DateFrom, new { @class = "form-control" })
+                                @Html.TextBox("DateFrom", Model.DateFrom, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateFrom").Watermark })
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="input-group date" id="datetimepicker4">
                                 @Html.TextBox("DateTo", Model.DateTo, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateTo").Watermark })
                                 <span class="input-group-addon">
@@ -294,30 +305,33 @@
                                 </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            @Html.DropDownList("Duration", Model.DurationList, new { @class = "form-control" })
-                        </div>
-                        <div class="col-md-6">
-                            @Html.DropDownList("Food", Model.FoodList, new { @class = "form-control", @multiple = "multiple" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.Prices, Model.PriceList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            @Html.DropDownList("Hotel", Model.HotelLevelList, new { @class = "form-control", @multiple = "multiple" })
+                            @Html.DropDownListFor(x => x.Durations, Model.DurationList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                         <div class="col-md-6">
-                            @Html.DropDownList("Transportation", Model.TransportationList, new { @class = "form-control", @multiple = "multiple" })
+                            @Html.DropDownListFor(x => x.Foods, Model.FoodList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            @Html.DropDownList("Type", Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.HotelLevels, Model.HotelLevelList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.Transportations, Model.TransportationList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" class="btn btn-default">Submit</button>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.Types, Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-offset-1 col-md-3">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
                     </div>
                 }
             </div>

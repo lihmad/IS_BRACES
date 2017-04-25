@@ -9,18 +9,27 @@ namespace IS_BRACES.Models.ViewModels
 {
     public class VacationSearch
     {
+        public string[] Countries { get; set; }
         [Display(Name = "Země")]
         public List<SelectListItem> CountryList { get; set; }
+        public string[] Durations { get; set; }
         [Display(Name = "Délka pobytu")]
         public List<SelectListItem> DurationList { get; set; }
+        public string[] HotelLevels { get; set; }
         [Display(Name = "Úroveň hotelu")]
         public List<SelectListItem> HotelLevelList { get; set; }
+        public string[] Foods { get; set; }
         [Display(Name = "Strava")]
         public List<SelectListItem> FoodList { get; set; }
+        public string[] Transportations { get; set; }
         [Display(Name = "Doprava")]
         public List<SelectListItem> TransportationList { get; set; }
+        public string[] Types { get; set; }
         [Display(Name = "Typ zájezdu")]
         public List<SelectListItem> TypeList { get; set; }
+        public string[] Prices { get; set; }
+        [Display(Name = "Cena")]
+        public List<SelectListItem> PriceList { get; set; }
         [Display(Name = "Nejdříve od", Prompt = "nejpozději od")]
         public DateTime DateFrom { get; set; }
         [Display(Name = "Nejpozději do", Prompt = "nejpozději do")]
@@ -34,6 +43,7 @@ namespace IS_BRACES.Models.ViewModels
             FoodList = GetFood();
             TransportationList = GetTransportation();
             TypeList = GetType();
+            PriceList = GetPrice();
         }
 
         public VacationSearch(DB_Model db)
@@ -44,6 +54,7 @@ namespace IS_BRACES.Models.ViewModels
             FoodList = GetFoodDB(db);
             TransportationList = GetTransportationDB(db);
             TypeList = GetTypeDB(db);
+            PriceList = GetPrice();
         }
 
         private List<SelectListItem> GetCountryDB(DB_Model DB)
@@ -127,6 +138,23 @@ namespace IS_BRACES.Models.ViewModels
             return l;
         }
 
+        private List<SelectListItem> GetPrice()
+        {
+            var l = new List<SelectListItem>();
+            var f = new List<string>() { "do 10 000 Kč", "od 10 000Kč do 20 000Kč", "od 20 000Kč do 40 000Kč", "od 40 000Kč do 70 000Kč", "od 70 000Kč" };
+            var c = 0;
+            foreach (string s in f)
+            {
+                var i = new SelectListItem()
+                {
+                    Text = s,
+                    Value = c++.ToString()
+                };
+                l.Add(i);
+            }
+            return l;
+        }
+
         private List<SelectListItem> GetDuration()
         {
             var l = new List<SelectListItem>();
@@ -147,7 +175,7 @@ namespace IS_BRACES.Models.ViewModels
         private List<SelectListItem> GetHotelLevel()
         {
             var l = new List<SelectListItem>();
-            var f = new List<string>() { "1 hvězda", "2 hvězdy", "3 hvězdy", "4 hvězdy", "5 hvězd" };
+            var f = new List<string>() { "*", "**", "***", "****", "*****" };
             var c = 1;
             foreach (string s in f)
             {

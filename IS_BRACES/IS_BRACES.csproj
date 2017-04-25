@@ -267,6 +267,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageHelper.cs" />
+    <Compile Include="Helpers\PredicateBuilder.cs" />
     <Compile Include="Models\Adresa.cs">
       <DependentUpon>DB.tt</DependentUpon>
     </Compile>
