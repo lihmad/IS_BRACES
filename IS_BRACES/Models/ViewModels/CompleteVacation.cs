@@ -20,12 +20,16 @@ namespace IS_BRACES.Models.ViewModels
         public List<SelectListItem> ChooseList { get; set; }
         public List<string> Image { get; set; }//base64
         public Guid Id { get; set; }
+        public Zajezdy zaj { get; set; }
 
         public CompleteVacation(DB_Model db, Guid id)
         {
+            Image = new List<string>();
             var zajezd = db.Zajezdy.Find(id);
-            var image = new ImageHelper();
-            Image.Add(image.GetTestBase64());
+            zaj = zajezd;
+            var prilohy = zajezd.Ubytovani.Prilohy.Select(x => x.Priloha).ToList();
+            if(prilohy.Any())
+                Image.AddRange(prilohy);
             Destination = zajezd.Destinace.Zeme;
             TypZajezdu = zajezd.VazTZajezdTypZajezdu.Select(x => x.TypZajezdu.Popis).ToList();
             TypeOfAcco = zajezd.Ubytovani.TypUbytovani.Typ;

@@ -54,8 +54,17 @@
         .icon_text {
             text-align: center;
             margin-top: 5px;
+            color: black;
         }
 
+        .quickButtons a {
+            text-decoration: none;
+        
+        }
+        .quickButtons a:hover {
+            text-decoration: none !important;
+        }         
+        
         .caption {
             margin-left: 20px;
         }
@@ -82,10 +91,12 @@
         <div class="col-md-3">
             <a href="Vacation/Detail/{{:Id}}">
                 <div class="thumbnail">
-                    <img src="{{:Image}}" alt="{{:Hotel}}">
+                    <img style="max-width: 252px; max-height: 168px;" src="{{:Image}}" alt="{{:Hotel}}">
                     <div class="caption">
-                        <h3>{{:Hotel}}</h3>
+                        {{stars:Stars}}
+                        <h3 style="margin-top: 0px;">{{:Hotel}}</h3>
                         <h4>{{:Destination}}</h4>
+                        <h4>{{price:Price}} Kč</h4>
                         <h5>{{normalDate:DateFrom}} - {{normalDate:DateTo}}</h5>
                     </div>
                     <div class="thumbnailContent">
@@ -104,22 +115,19 @@
     <script>
         $(function () {
 
-            //$('select').select2({
-            //    language: 'cs'
-            //});
+            var m = moment();
 
-            var yesterday = moment().subtract(1, 'days');
             $('#datetimepicker1').datetimepicker({
                 locale: 'cs',
                 format: 'L',
-                defaultDate: moment(),
-                minDate: moment()
+                defaultDate: m,
+                minDate: m
             });
             $('#datetimepicker2').datetimepicker({
                 locale: 'cs',
                 format: 'L',
-                defaultDate: moment().add(7, 'days'),
-                minDate: moment().add(1, 'days'),
+                defaultDate: m.add(7, 'days'),
+                minDate: m.add(1, 'days'),
                 useCurrent: false //Important! See issue #1075
             });
             $("#datetimepicker1").on("dp.change", function (e) {
@@ -138,21 +146,18 @@
             $('#datetimepicker3').datetimepicker({
                 locale: 'cs',
                 format: 'L',
-                defaultDate: moment(),
-                minDate: moment()
+                useCurrent: true
             });
 
             $('#datetimepicker4').datetimepicker({
                 locale: 'cs',
                 format: 'L',
-                defaultDate: moment().add(14, 'days'),
-                minDate: moment().add(1, 'days'),
-                useCurrent: false //Important! See issue #1075
+                useCurrent: true
             });
 
-            $("#datetimepicker3").on("dp.change", function (e) {
-                $('#datetimepicker4').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
-            });
+            //$("#datetimepicker3").on("dp.change", function (e) {
+            //    $('#datetimepicker4').data("DateTimePicker").minDate(moment(e.date).add(1, 'days'));
+            //});
 
             $("#Countries").select2({
                 placeholder: "vyberte si zemi kam chcete cestovat"
@@ -161,7 +166,7 @@
                 placeholder: "vyberte si typ stravy"
             });
             $("#Durations").select2({
-                placeholder: "vyberte si cenu zájezdu"
+                placeholder: "vyberte si délku zájezdu"
             });
             $("#Prices").select2({
                 placeholder: "vyberte si cenu zájezdu"
@@ -200,18 +205,47 @@
             $.views.converters({
                 normalDate: function (value) {
                     return moment(value).format("L");
+                },
+                stars: function (value) {
+                    var span = '';
+                    for (var z = 0; z < value; z++) {
+                        span += '<span style="font-size: small;" class="glyphicon glyphicon-star star-hotel" aria-hidden="true"></span>'
+                    }
+                    return span;
+                },
+                price: function (value) {
+                    var txt = value.toString();
+                    var f = txt.split("");
+                    var final = '';
+                    var index = 0;
+                    for (var i = f.length - 1; i >= 0; i--) {
+                        if (index++ % 3 === 0)
+                            final += ' ';
+                        final += f[i];
+                    }
+                    return final.split("").reverse().join("");
                 }
             });
 
             var req = $.ajax({
-                url: '/api/VacationApi',
+                url: '/api/VacationApi?numberOfHotels=8',
                 method: "GET"
             });
 
             req.done(function (data) {
                 var template = $.templates("#theTmpl");
                 var htmlOutput = template.render(data);
-                $("#content").html(htmlOutput);
+                var x = htmlOutput.split("<div class=\"col-md-3\">")
+                var html = "<div class='row'>";
+                for (var z = 1; z <= x.length - 1; z++) {
+                    if (z !== 1 && (z - 1) % 4 === 0) {
+                        html += "</div><div class='row'>";
+                    }
+                    html += "<div class='col-md-3'>";
+                    html += x[z];
+                }
+                html += "</div>";
+                $("#content").html(html);
             });
         }
     </script>
@@ -220,7 +254,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>BlueTravel s.r.o.</h1>
-        <div class="row">
+        <div class="row" style="margin-top:45px;">
 
             @using (Html.BeginForm("FindQuick", "Search", FormMethod.Get, new { @class = "form-group form-group-lg" }))
             {
@@ -244,31 +278,41 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default btn-lg">Odeslat</button>
                 </div>
             }
         </div>
         <br />
-        <div class="row">
+        <div style="margin-top:30px;" class="row quickButtons">
             <div class="col-md-2">
-                <div class="icon icon_mountain center-block"></div>
-                <p class="icon_text">Zimní dovolená</p>
+                <a href="~/Search/Find?From=&To=&Types=be06f36c-b91b-4918-b932-086491ee9aa0">
+                    <div class="icon icon_mountain center-block"></div>
+                    <p class="icon_text">Zimní dovolená</p>
+                </a>
             </div>
             <div class="col-md-2">
-                <div class="icon icon_beach center-block"></div>
-                <p class="icon_text">Letní dovolená</p>
+                <a href="~/Search/Find?From=&To=&Types=dfde7159-d3ff-4fbe-9709-13e6427114c6&Types=44e99235-301f-4503-b7ce-482f256f2236&Types=d9d86f01-d687-4f48-8a89-beb2b93bbbbd">
+                    <div class="icon icon_beach center-block"></div>
+                    <p class="icon_text">Letní dovolená</p>
+                </a>
             </div>
             <div class="col-md-2">
-                <div class="icon icon_cathedral center-block"></div>
-                <p class="icon_text">Poznávací dovolená</p>
+                <a href="~/Search/Find?From=&To=&Types=d1605715-fd84-46b9-97ac-05e6a9417efb&Types=3a3a8603-ebff-43d3-9c2f-2cba5ae58617&Types=865b1cf8-cae1-4a04-8e6f-e981bed1faee">
+                    <div class="icon icon_cathedral center-block"></div>
+                    <p class="icon_text">Poznávací dovolená</p>
+                </a>
             </div>
             <div class="col-md-2">
-                <div class="icon icon_spa center-block"></div>
-                <p class="icon_text">Relaxační dovolená</p>
+                <a href="~/Search/Find?From=&To=&Types=e821a5bb-579d-4dc6-af6a-0939afe11d27&Types=58625068-1ede-4a6f-87ef-221bcfe94325&Types=a10367ef-13c2-4576-89e1-9ee97efe7758&Types=51994071-020b-48cd-99a7-e4eb66210fdb">
+                    <div class="icon icon_spa center-block"></div>
+                    <p class="icon_text">Relaxační dovolená</p>
+                </a>
             </div>
             <div class="col-md-2">
-                <div class="icon icon_suitcase center-block"></div>
-                <p class="icon_text">Vlastní dovolená</p>
+                <a href="~/Search/Find?From=&To=&Types=d9d86f01-d687-4f48-8a89-beb2b93bbbbd">
+                    <div class="icon icon_suitcase center-block"></div>
+                    <p class="icon_text">Dovolená na lodi</p>
+                </a>
             </div>
 
         </div>
@@ -291,7 +335,7 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="input-group date" id="datetimepicker3">
-                                @Html.TextBox("DateFrom", Model.DateFrom, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateFrom").Watermark })
+                                @Html.TextBoxFor(x => x.From, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateFrom").Watermark })
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -299,7 +343,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="input-group date" id="datetimepicker4">
-                                @Html.TextBox("DateTo", Model.DateTo, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateTo").Watermark })
+                                @Html.TextBoxFor(x => x.To, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateTo").Watermark })
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -330,7 +374,7 @@
                             @Html.DropDownListFor(x => x.Types, Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
                         </div>
                         <div class="col-md-offset-1 col-md-3">
-                            <button type="submit" class="btn btn-default">Submit</button>
+                            <button type="submit" class="btn btn-default">Vyhledat</button>
                         </div>
                     </div>
                 }

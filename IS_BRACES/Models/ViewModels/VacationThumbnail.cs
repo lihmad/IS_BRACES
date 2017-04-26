@@ -16,6 +16,8 @@ namespace IS_BRACES.Models.ViewModels
         public string Food { get; set; }
         public string Image { get; set; }//base64
         public Guid Id { get; set; }
+        public int Stars { get; set; }
+        public decimal Price { get; set; }
 
         public List<VacationThumbnail> GetDemo(int num = 8) {
 

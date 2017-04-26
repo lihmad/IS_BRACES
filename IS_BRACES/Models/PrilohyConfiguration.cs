@@ -26,11 +26,11 @@ namespace IS_BRACES.Models
         public PrilohyConfiguration(string schema)
         {
             ToTable("Prilohy", schema);
-            HasKey(x => new { x.Id, x.Priloha, x.IdUbytovani });
+            HasKey(x => new { x.Id, x.IdUbytovani });
 
             Property(x => x.Id).HasColumnName(@"ID").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-            Property(x => x.Priloha).HasColumnName(@"Priloha").HasColumnType("image").IsRequired().HasMaxLength(2147483647).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
             Property(x => x.IdUbytovani).HasColumnName(@"ID_Ubytovani").HasColumnType("uniqueidentifier").IsRequired().HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+            Property(x => x.Priloha).HasColumnName(@"Priloha").HasColumnType("varchar").IsOptional().IsUnicode(false).HasMaxLength(500);
 
             // Foreign keys
             HasRequired(a => a.Ubytovani).WithMany(b => b.Prilohy).HasForeignKey(c => c.IdUbytovani).WillCascadeOnDelete(false); // FK_Prilohy_Ubytovani

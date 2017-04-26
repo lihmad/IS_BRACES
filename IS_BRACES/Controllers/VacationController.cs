@@ -15,7 +15,7 @@ namespace IS_BRACES.Controllers
             CompleteVacation vaca = new CompleteVacation(DB, id);
 
             ViewBag.id = "123";
-            return View();
+            return View(vaca);
         }
     }
 }

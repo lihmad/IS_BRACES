@@ -19,8 +19,8 @@ namespace IS_BRACES.Models
     public partial class Prilohy
     {
         public System.Guid Id { get; set; } // ID (Primary key)
-        public byte[] Priloha { get; set; } // Priloha (Primary key) (length: 2147483647)
         public System.Guid IdUbytovani { get; set; } // ID_Ubytovani (Primary key)
+        public string Priloha { get; set; } // Priloha (length: 500)
 
         // Foreign keys
 

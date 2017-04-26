@@ -30,10 +30,14 @@ namespace IS_BRACES.Models.ViewModels
         public string[] Prices { get; set; }
         [Display(Name = "Cena")]
         public List<SelectListItem> PriceList { get; set; }
-        [Display(Name = "Nejdříve od", Prompt = "nejpozději od")]
-        public DateTime DateFrom { get; set; }
+        [Display(Name = "Nejdříve od", Prompt = "nejdříve od")]
+        public string From { get; set; }
+        [Display(Name = "Nejdříve od", Prompt = "nejdříve od")]
+        public DateTime? DateFrom { get; set; }
         [Display(Name = "Nejpozději do", Prompt = "nejpozději do")]
-        public DateTime DateTo { get; set; }
+        public string To { get; set; }
+        [Display(Name = "Nejpozději do", Prompt = "nejpozději do")]
+        public DateTime? DateTo { get; set; }
 
         public VacationSearch()
         {

@@ -1,5 +1,280 @@
-﻿@{
+﻿@model IS_BRACES.Models.ViewModels.VacationSearch
+@using IS_BRACES.Models.ViewModels;
+
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int index = 0;
+}
+
+@section css{
+
+    @Styles.Render("~/Content/datepicker")
+    @Styles.Render("~/Content/select2.min.css")
+    <style>
+        .star-hotel {
+            color: gold;
+        }
+
+        .caption {
+            margin-left: 20px;
+        }
+
+        .thumbnailContent {
+            margin-left: 30px;
+            text-decoration: none;
+            color: rgb(51, 51, 51);
+        }
+
+        .filtr .row {
+            margin-bottom: 10px;
+        }
+    </style>
 }
 
 
+@functions{
+    public static string getPrice(decimal price)
+    {
+        var f = price.ToString();
+        var final = "";
+        var index = 0;
+        for (var i = f.Length - 1; i >= 0; i--)
+        {
+            if (index++ % 3 == 0)
+            {
+                final += " ";
+            }
+            final += f[i];
+        }
+        char[] arr = final.ToCharArray();
+        Array.Reverse(arr);
+        return new string(arr);
+    }
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/datepicker")
+    @Scripts.Render("~/Scripts/select2/select2.min.js")
+    <script>
+        $(function () {
+
+            $('#datetimepicker3').datetimepicker({
+                locale: 'cs',
+                format: 'L',
+                useCurrent: true
+            });
+
+            $('#datetimepicker4').datetimepicker({
+                locale: 'cs',
+                format: 'L',
+                useCurrent: true
+            });
+
+            $("#Countries").select2({
+                placeholder: "vyberte si zemi kam chcete cestovat"
+            });
+            $("#Foods").select2({
+                placeholder: "vyberte si typ stravy"
+            });
+            $("#Durations").select2({
+                placeholder: "vyberte si délku zájezdu"
+            });
+            $("#Prices").select2({
+                placeholder: "vyberte si cenu zájezdu"
+            });
+            $("#HotelLevels").select2({
+                placeholder: "vyberte si úroveň hotelu",
+                templateResult: imgStarHotel
+            });
+            $("#Transportations").select2({
+                placeholder: "vyberte si typ přepravy"
+            });
+            $("#Types").select2({
+                placeholder: "vyberte si druh dovolené"
+            });
+
+
+            @if (Model.Countries != null && Model.Countries.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Countries)").text()
+                    $("#Countries").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+            @if (Model.Foods != null && Model.Foods.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Foods)").text();
+                    $("#Foods").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+            @if (Model.Transportations != null && Model.Transportations.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Transportations)").text()
+                    $("#Transportations").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+            @if (Model.Types != null && Model.Types.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Types)").text()
+                    $("#Types").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+             @if (Model.HotelLevels != null && Model.HotelLevels.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.HotelLevels)").text()
+                    $("#HotelLevels").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+
+            @if (Model.Durations != null && Model.Durations.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Durations)").text()
+                    $("#Durations").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+
+            @if (Model.Prices != null && Model.Prices.Any()) {
+                <text>
+                    var str = $("<div/>").html("@string.Join("\",\"", Model.Prices)").text()
+                    $("#Prices").select2().val(str.split("\",\"")).trigger("change");
+                </text>
+            }
+
+        });
+
+        function imgStarHotel(hotel) {
+            var i = parseInt(hotel.id);
+            if (i !== null || i !== undefined) {
+                var span = '';
+                for (var z = 0; z < i; z++) {
+                    span += '<span class="glyphicon glyphicon-star star-hotel" aria-hidden="true"></span>'
+                }
+                var $hotel = $(span);
+                return $hotel;
+            }
+
+            return hotel.text;
+
+        }
+    </script>
+}
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">BlueTravel s.r.o.</a>
+        </div>
+    </div>
+</nav>
+<div style="margin-top:70px;" class="container">
+    <h1 style="margin-bottom: 25px;"  class="text-center">Vyhledávání</h1>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <div class="filtr">
+                @using (Html.BeginForm("Find", "Search", FormMethod.Get, new { @class = "form-group" }))
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            @*@Html.DropDownList("Country", Model.CountryList, new { @class = "form-control", @multiple = "multiple" })*@
+                            @Html.DropDownListFor(x => x.Countries, Model.CountryList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="input-group date" id="datetimepicker3">
+                                @Html.TextBoxFor(x => x.From, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateFrom").Watermark })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date" id="datetimepicker4">
+                                @Html.TextBoxFor(x => x.To, new { @class = "form-control", @placeholder = ViewData.ModelMetadata.Properties.First(x => x.PropertyName == "DateTo").Watermark })
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(x => x.Prices, Model.PriceList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.Durations, Model.DurationList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.Foods, Model.FoodList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.HotelLevels, Model.HotelLevelList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-6">
+                            @Html.DropDownListFor(x => x.Transportations, Model.TransportationList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(x => x.Types, Model.TypeList, new { @class = "form-control", @multiple = "multiple" })
+                        </div>
+                        <div class="col-md-offset-1 col-md-3">
+                            <button type="submit" class="btn btn-default">Vyhledat</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+
+        @foreach (VacationThumbnail vt in ViewBag.Thumbnails)
+        {
+
+            if (index % 4 == 0 && index != 0)
+            {
+                @:</div>
+                @:<div class="row">
+
+
+            }
+
+            <div class="col-md-3">
+                <a href="Vacation/Detail/@vt.Id">
+                    <div class="thumbnail">
+                        <img style="max-width: 252px; max-height: 168px;" src="@vt.Image" alt="@vt.Hotel">
+                        <div class="caption">
+                            @for (var i = 0; i < vt.Stars; i++)
+                            {
+                                <span style="font-size: small;" class="glyphicon glyphicon-star star-hotel" aria-hidden="true"></span>
+                            }
+                            <h3 style="margin-top: 0px;">@vt.Hotel</h3>
+                            <h4>@vt.Destination</h4>
+                            <h4>@vt.Price.ToString("### ###") Kč</h4>
+                            <h5>@vt.DateFrom.ToString("dd.MM.yyyy") - @vt.DateTo.Date.ToString("dd.MM.yyyy")</h5>
+                        </div>
+                        <div class="thumbnailContent">
+                            <div class="row">
+                                <p class="col-md-4">Stravování: </p><p class="col-md-8">@vt.Food</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-md-4">Doprava: </p><p class="col-md-8">@vt.Transportation</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+
+            {
+                index++;
+            }
+        }
+
+
+    </div>
+
+</div>

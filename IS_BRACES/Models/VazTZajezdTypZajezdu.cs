@@ -35,6 +35,7 @@ namespace IS_BRACES.Models
 
         public VazTZajezdTypZajezdu()
         {
+            Id = System.Guid.NewGuid();
             InitializePartial();
         }
 

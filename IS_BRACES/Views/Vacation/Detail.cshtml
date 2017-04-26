@@ -1,8 +1,78 @@
-﻿
+﻿@model IS_BRACES.Models.ViewModels.CompleteVacation
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section css{
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet"> <!-- 3 KB -->
+    }
+@section scripts{
 
-<h2>Detail @ViewBag.id</h2>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script> <!-- 16 KB -->
+
+    }
+
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">BlueTravel s.r.o.</a>
+        </div>
+    </div>
+</nav>
+<div style="margin-top:70px; margin-bottom:30px;" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            @for (var i = 0; i < Model.zaj.Ubytovani.PocetHvezd; i++)
+            {
+                <span style="font-size: medium;" class="glyphicon glyphicon-star star-hotel" aria-hidden="true"></span>
+            }
+            <h1 style="margin-bottom: 25px; margin-top: 10px;">
+                @Model.zaj.Ubytovani.Nazev
+            </h1>
+            <h2>@Model.zaj.Destinace.Zeme, @Model.zaj.Ubytovani.Adresa.Mesto</h2>
+            <h3>
+                @foreach (var typ in Model.TypZajezdu)
+                {
+                    <span class="label label-default">@typ</span>
+                }
+            
+            </h3>
+            <h4 style="margin-top:25px;">Cena: @Model.zaj.Cena.ToString("### ###") Kč</h4>
+            <div>
+                <table class="table">
+                    <tbody>
+                        <tr><th>Stravování</th><td>@Model.zaj.Stravovani.Typ</td></tr>
+                        <tr><th>Doprava</th><td>@Model.zaj.Doprava.Type</td></tr>
+                        <tr><th>Začátek</th><td>@Model.zaj.DatumOd.ToString("dd.MM.yyyy")</td></tr>
+                        <tr><th>Konec</th><td>@Model.zaj.DatumOd.AddDays(Model.zaj.DelkaPobytu).ToString("dd.MM.yyyy")</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="fotorama" data-allowfullscreen="native" data-autoplay="true">
+                @foreach (var image in Model.Image)
+                {
+                    <img src="@image" />
+                }
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+
+
+        </div>
+        <div style="margin-top: 15px;" class="col-md-6">
+            @Model.zaj.Popis
+        </div>
+       
+
+    </div>
+</div>
+
+
 

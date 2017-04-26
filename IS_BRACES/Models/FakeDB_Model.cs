@@ -49,7 +49,7 @@ namespace IS_BRACES.Models
             Pojisteni = new FakeDbSet<Pojisteni>("Id");
             Pojistovny = new FakeDbSet<Pojistovny>("Id");
             Pokoje = new FakeDbSet<Pokoje>("Id", "IdUbytovani", "Kapacita");
-            Prilohy = new FakeDbSet<Prilohy>("Id", "Priloha", "IdUbytovani");
+            Prilohy = new FakeDbSet<Prilohy>("Id", "IdUbytovani");
             Rezervace = new FakeDbSet<Rezervace>("Id");
             Stravovani = new FakeDbSet<Stravovani>("Id");
             sys_DatabaseFirewallRules = new FakeDbSet<sys_DatabaseFirewallRules>("Id", "Name", "StartIpAddress", "EndIpAddress", "CreateDate", "ModifyDate");

@@ -15,87 +15,225 @@ namespace IS_BRACES.Controllers
         [HttpGet]
         public ActionResult FindQuick(string find, string datet, string datef)
         {
+            var predicate = PredicateBuilder.True<Zajezdy>();
+            if (!string.IsNullOrEmpty(datef)) {
+                DateTime from;
+                if (DateTime.TryParse(datef, out from))
+                {
+                    predicate = predicate.And(i => i.DatumOd >= from);
+                }
+            }
 
-            return RedirectToAction("Find", new {vacation = new VacationSearch() });
+            if (!string.IsNullOrEmpty(datet))
+            {
+                DateTime to;
+                if (DateTime.TryParse(datet, out to))
+                {
+                    to = to.AddHours(24);
+                    predicate = predicate.And(i => System.Data.Entity.DbFunctions.AddDays(i.DatumOd, i.DelkaPobytu) < to);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(find)) {
+                var inner = PredicateBuilder.False<Zajezdy>();
+                inner = inner.Or(i => i.Destinace.Zeme.Contains(find));
+                inner = inner.Or(i => i.Popis.Contains(find));
+                inner = inner.Or(i => i.Ubytovani.Nazev.Contains(find));
+                predicate = predicate.And(inner);
+            }
+
+            var zajezdy = DB.Zajezdy.Where(predicate);
+
+
+
+            List<VacationThumbnail> vts = new List<VacationThumbnail>();
+            ImageHelper ih = new ImageHelper();
+            foreach (var zajezd in zajezdy)
+            {
+                VacationThumbnail vt = new VacationThumbnail()
+                {
+                    Id = zajezd.Id,
+                    Destination = zajezd.Destinace.Zeme + ", " + zajezd.Ubytovani.Adresa.Mesto,
+                    Hotel = zajezd.Ubytovani.Nazev,
+                    Stars = zajezd.Ubytovani.PocetHvezd.HasValue ? zajezd.Ubytovani.PocetHvezd.Value : 0,
+                    DateFrom = zajezd.DatumOd,
+                    DateTo = zajezd.DatumOd.AddDays(zajezd.DelkaPobytu),
+                    Transportation = zajezd.Doprava.Type,
+                    Food = zajezd.Stravovani.Typ,
+                    Image = zajezd.Ubytovani.Prilohy.Select(z => z.Priloha).FirstOrDefault(),
+                    Price = zajezd.Cena
+                };
+                vts.Add(vt);
+            }
+
+            ViewBag.Thumbnails = vts;
+
+            return View("Find", new VacationSearch(DB));
         }
 
         [HttpGet]
         public ActionResult Find(VacationSearch vacation)
         {
-            
+            var vac = new VacationSearch(DB);
 
             var predicate = PredicateBuilder.True<Zajezdy>();
 
-            if (vacation.Countries != null && vacation.Countries.Any()) {
-                var inner = PredicateBuilder.True<Zajezdy>();
-                foreach (string country in vacation.Countries) {
-                    Guid id;
-                    if(Guid.TryParse(country, out id))
-                        inner = inner.Or(i => i.Destinace.Id == id);
+            if (vacation.Countries != null && vacation.Countries.Any()) { 
+                predicate = predicate.And(i => vacation.Countries.Contains(i.Destinace.Id.ToString()));
+                var sel = vac.CountryList.Where(x => vacation.Countries.Contains(x.Value));
+
+                foreach (var s in sel) {
+                    var r = vac.CountryList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+                    
                 }
 
-                predicate = predicate.And(inner);
+                var kk = vac.CountryList.Where(x => x.Selected == true);
+
+                if (kk.Count() > 0) {
+                    List<string> sss = new List<string>();
+                    foreach(var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Countries = sss.ToArray();
+                }
             }
 
-            if (vacation.Foods != null && vacation.Foods.Any())
-            {
-                var inner = PredicateBuilder.True<Zajezdy>();
-                foreach (string food in vacation.Foods)
+            if (vacation.Foods != null && vacation.Foods.Any()) {
+                predicate = predicate.And(i => vacation.Foods.Contains(i.Stravovani.Id.ToString()));
+
+                var sel = vac.FoodList.Where(x => vacation.Foods.Contains(x.Value));
+
+                foreach (var s in sel)
                 {
-                    Guid id;
-                    if (Guid.TryParse(food, out id))
-                        inner = inner.Or(i => i.Stravovani.Id == id);
+                    var r = vac.FoodList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
                 }
 
-                predicate = predicate.And(inner);
-            }
+                var kk = vac.FoodList.Where(x => x.Selected == true);
 
-
-            if (vacation.Transportations != null && vacation.Transportations.Any())
-            {
-                var inner = PredicateBuilder.True<Zajezdy>();
-                foreach (string transport in vacation.Transportations)
+                if (kk.Count() > 0)
                 {
-                    Guid id;
-                    if (Guid.TryParse(transport, out id))
-                        inner = inner.Or(i => i.Doprava.Id == id);
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Foods = sss.ToArray();
                 }
-
-                predicate = predicate.And(inner);
             }
 
-            if (vacation.Types != null && vacation.Types.Any())
-            {
-                var inner = PredicateBuilder.True<Zajezdy>();
-                foreach (string type in vacation.Types)
+
+            if (vacation.Transportations != null && vacation.Transportations.Any()) {
+                predicate = predicate.And(i => vacation.Transportations.Contains(i.Doprava.Id.ToString()));
+
+                var sel = vac.TransportationList.Where(x => vacation.Transportations.Contains(x.Value));
+
+                foreach (var s in sel)
                 {
-                    Guid id;
-                    if (Guid.TryParse(type, out id))
-                        inner = inner.Or(i => i.Ubytovani.TypUbytovani.Id == id);
+                    var r = vac.TransportationList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
                 }
 
-                predicate = predicate.And(inner);
-            }
+                var kk = vac.TransportationList.Where(x => x.Selected == true);
 
-            if (vacation.HotelLevels != null && vacation.HotelLevels.Any())
-            {
-                var inner = PredicateBuilder.True<Zajezdy>();
-                foreach (string level in vacation.HotelLevels)
+                if (kk.Count() > 0)
                 {
-                    int stars;
-                    if (int.TryParse(level, out stars))
-                        inner = inner.Or(i => i.Ubytovani.PocetHvezd == stars);
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Transportations = sss.ToArray();
                 }
-
-                predicate = predicate.And(inner);
             }
 
-            if (vacation.Durations != null && vacation.Durations.Any()) {
-                var inner = PredicateBuilder.True<Zajezdy>();
+
+            if (vacation.Types != null && vacation.Types.Any()) {
+                predicate = predicate.And(i => i.VazTZajezdTypZajezdu.Any(z => vacation.Types.Contains(z.IdTypZajezdu.ToString())));
+
+                var sel = vac.TypeList.Where(z => vacation.Types.Contains(z.Value));
+                foreach (var s in sel)
+                {
+                    var r = vac.TypeList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
+                }
+
+                var kk = vac.TypeList.Where(x => x.Selected == true);
+
+                if (kk.Count() > 0)
+                {
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Types = sss.ToArray();
+                }
+
+            }
+
+
+            if (vacation.HotelLevels != null && vacation.HotelLevels.Any()) {
+                predicate = predicate.And(i => vacation.HotelLevels.Contains(i.Ubytovani.PocetHvezd.ToString()));
+
+                var sel = vac.HotelLevelList.Where(x => vacation.HotelLevels.Contains(x.Value));
+
+                foreach (var s in sel)
+                {
+                    var r = vac.HotelLevelList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
+                }
+
+                var kk = vac.HotelLevelList.Where(x => x.Selected == true);
+
+                if (kk.Count() > 0)
+                {
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.HotelLevels = sss.ToArray();
+                }
+            }
+                
+
+            if (!string.IsNullOrEmpty(vacation.From)) {
+                DateTime from;
+                if (DateTime.TryParse(vacation.From, out from)){
+                    predicate = predicate.And(i => i.DatumOd >= from);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(vacation.To))
+            {
+                DateTime to;
+                if (DateTime.TryParse(vacation.To, out to))
+                {
+                    to = to.AddHours(24);
+                    predicate = predicate.And(i => System.Data.Entity.DbFunctions.AddDays(i.DatumOd, i.DelkaPobytu) < to);
+                }
+            }
+            
+                
+
+
+            if (vacation.Durations != null && vacation.Durations.Any())
+            {
+                var inner = PredicateBuilder.False<Zajezdy>();
+                
                 foreach (string duration in vacation.Durations)
                 {
+                    
                     int id;
-                    if (int.TryParse(duration, out id)) {
+                    if (int.TryParse(duration, out id))
+                    {
                         if (id == 0)
                         {
                             inner = inner.Or(i => i.DelkaPobytu < 7);
@@ -104,11 +242,36 @@ namespace IS_BRACES.Controllers
                         {
                             inner = inner.Or(i => i.DelkaPobytu >= 7 && i.DelkaPobytu <= 14);
                         }
-                        else if (id == 2) {
+                        else if (id == 2)
+                        {
                             inner = inner.Or(i => i.DelkaPobytu > 14);
                         }
 
                     }
+
+                    
+                }
+
+
+                var sel = vac.DurationList.Where(x => vacation.Durations.Contains(x.Value));
+
+                foreach (var s in sel)
+                {
+                    var r = vac.DurationList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
+                }
+
+                var kk = vac.DurationList.Where(x => x.Selected == true);
+
+                if (kk.Count() > 0)
+                {
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Durations = sss.ToArray();
                 }
 
                 predicate = predicate.And(inner);
@@ -116,7 +279,7 @@ namespace IS_BRACES.Controllers
 
             if (vacation.Prices != null && vacation.Prices.Any())
             {
-                var inner = PredicateBuilder.True<Zajezdy>();
+                var inner = PredicateBuilder.False<Zajezdy>();
                 foreach (string price in vacation.Prices)
                 {
                     int id;
@@ -140,14 +303,36 @@ namespace IS_BRACES.Controllers
                         }
                         else if (id == 4)
                         {
-                            inner = inner.Or(i => i.Cena >= 70000 );
+                            inner = inner.Or(i => i.Cena >= 70000);
                         }
 
                     }
                 }
 
+                var sel = vac.PriceList.Where(x => vacation.Prices.Contains(x.Value));
+
+                foreach (var s in sel)
+                {
+                    var r = vac.PriceList.First(x => x.Value == s.Value);
+                    r.Selected = true;
+
+                }
+
+                var kk = vac.PriceList.Where(x => x.Selected == true);
+
+                if (kk.Count() > 0)
+                {
+                    List<string> sss = new List<string>();
+                    foreach (var kkk in kk)
+                    {
+                        sss.Add(kkk.Value);
+                    }
+                    vac.Prices = sss.ToArray();
+                }
+
                 predicate = predicate.And(inner);
             }
+
 
 
             var zajezdy = DB.Zajezdy.Where(predicate);
@@ -158,18 +343,23 @@ namespace IS_BRACES.Controllers
             ImageHelper ih = new ImageHelper();
             foreach (var zajezd in zajezdy) {
                 VacationThumbnail vt = new VacationThumbnail() {
+                    Id = zajezd.Id,
+                    Destination = zajezd.Destinace.Zeme + ", " + zajezd.Ubytovani.Adresa.Mesto,
+                    Hotel = zajezd.Ubytovani.Nazev,
+                    Stars = zajezd.Ubytovani.PocetHvezd.HasValue ? zajezd.Ubytovani.PocetHvezd.Value : 0,
                     DateFrom = zajezd.DatumOd,
                     DateTo = zajezd.DatumOd.AddDays(zajezd.DelkaPobytu),
-                    Destination = zajezd.Destinace.Zeme,
+                    Transportation = zajezd.Doprava.Type,
                     Food = zajezd.Stravovani.Typ,
-                    Hotel = zajezd.Ubytovani.Nazev,
-                    Image = ih.GetTestBase64(),
-                    Id = zajezd.Id,
-                    Transportation = zajezd.Doprava.Type
+                    Image = zajezd.Ubytovani.Prilohy.Select(z => z.Priloha).FirstOrDefault(),
+                    Price = zajezd.Cena
                 };
                 vts.Add(vt);
             }
-            return View(vts);
+
+            ViewBag.Thumbnails = vts;
+
+            return View(vac);
         }
     }
 }
